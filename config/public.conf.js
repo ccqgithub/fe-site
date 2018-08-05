@@ -5,10 +5,9 @@
 
 const path = require('path');
 const APP_ENV = process.env.APP_ENV || 'dev';
-const configs = {};
 
-// common
-let common = {
+/* === config start === */
+const COMMON_CONF = {
   // 输出目录
   distPath: path.join(__dirname, '../dist'),
   // public path
@@ -21,17 +20,19 @@ let common = {
   clear: false
 }
 
-/* === ENV CONF === */
-configs['dev'] = Object.assign({}, common, {
-  clear: true,
-  compress: false,
-});
-
-configs['prod'] = Object.assign({}, common, {
-  clear: false,
-  compress: true,
-});
-/* === ENV CONF END === */
+const ENV_CONF = {
+  // dev
+  dev: {
+    clear: true,
+    compress: false
+  },
+  // prod
+  prod: {
+    clear: false,
+    compress: true
+  }
+}
+/* === config end === */
 
 // module.exports
-module.exports = configs[APP_ENV];
+module.exports = Object.assign({}, COMMON_CONF, ENV_CONF[APP_ENV]);

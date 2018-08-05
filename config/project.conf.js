@@ -1,3 +1,7 @@
+/**
+ * 项目配置
+ */
+
 module.exports = {
 
   // dev server 配置: 不能删

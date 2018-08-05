@@ -13,7 +13,6 @@ const findEntry = require('./lib/find-entry');
 // configs
 const defines = require('../config/define.conf');
 const publicConf = require('../config/public.conf');
-const prjConf = require('../config/project.conf');
 
 // is production
 const isProduction = process.env.NODE_ENV === 'production';
@@ -246,7 +245,7 @@ configExports.module = {
 const reVendorReact = /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|prop-types)[\\/]/;
 const reVendorVue = /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/;
 const reVendorRx = /[\\/]node_modules[\\/](rxjs)[\\/]/;
-const reVendorCore = /[\\/]node_modules[\\/](core-js)[\\/]/;
+const reVendorCore = /[\\/]node_modules[\\/](core-js|moment)[\\/]/;
 const reVendorOther = function(module) {
   return /[\\/]node_modules[\\/]/.test(module.resource)
     && !reVendorReact.test(module.resource)
@@ -273,8 +272,8 @@ configExports.optimization = {
   runtimeChunk: 'single',
   splitChunks: {
     chunks: "all",
-    minSize: 30000,
-    maxSize: 300000,
+    minSize: 100000,
+    maxSize: 900000,
     minChunks: 1,
     maxAsyncRequests: 5,
     maxInitialRequests: 5,
