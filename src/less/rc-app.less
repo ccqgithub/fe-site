@@ -1,0 +1,163 @@
+@import (less) "~gent.css/css/normalize/reset.css";
+@import (less) "~gent.css/css/safe-area.css";
+
+html {
+  background: #fff fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Source Han Sans", sans-serif;
+  color: #000;
+}
+
+*, *::before, *::after {
+  box-sizing:inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+.app {
+  height: 100%;
+  position: relative;
+}
+
+.app-main {
+  height: 100%;
+  position: relative;
+}
+
+.app-header {
+  height: 50px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+
+  .header {
+    height: 50px;
+    background: rgb(64, 20, 168);
+    display: flex;
+    justify-content: center;
+  
+    li {    
+      line-height: 50px;
+      border-right: 1px solid #fff;
+  
+      &:first-child {
+        border-left: 1px solid #fff;
+      }
+  
+      a {
+        padding: 0 50px;
+        color: #fff;
+        display: block;
+      }
+    }
+  }
+}
+
+.app-pages {
+  top: 50px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.page {
+  height: 100%;
+  overflow: auto;
+}
+
+.page-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 500px;
+    padding: 20px;
+    background: rgb(64, 20, 168);
+    border-radius: 4px;
+  
+    > div {
+      padding: 10px 0;
+    }
+  
+    input {
+      background: none;
+      color: #fff;
+      border: 1px solid #fff;
+      padding: 5px 10px;
+      line-height: 20px;
+      border-radius: 4px;
+      width: 100%;
+    }
+  }
+}
+
+.page-user {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .user {
+    width: 500px;
+    background: rgb(64, 20, 168);
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+}
+
+.page-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eee;
+
+  .list {
+    width: 500px;
+    padding: 20px;
+    background: rgb(64, 20, 168);
+    border-radius: 4px;
+  }
+
+  .top {
+    margin-bottom: 50px;
+  }
+
+  table {
+    width: 100%;
+    color: #fff;
+    table-layout: fixed;
+  }
+
+  td {
+    border-bottom: 1px solid #fff;
+    padding: 5px;
+    text-align: center;
+  }
+}
+
+.button {
+  background: #fff;
+  color: rgb(64, 20, 168);
+  border: 1px solid #fff;
+  padding: 5px 10px;
+  line-height: 18px;
+  height: 30px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}

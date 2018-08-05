@@ -1,0 +1,8 @@
+web:
+  image: nginx
+  ports:
+   - "8080:80"
+  environment:
+   - NGINX_HOST=www.server.com
+   - NGINX_PORT=80
+  command: /bin/bash -c "envsubst < /etc/nginx/conf.d/server.conf.template  > /etc/nginx/conf.d/server.conf && nginx -g 'daemon off;'"

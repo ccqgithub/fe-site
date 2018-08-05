@@ -1,0 +1,106 @@
+<script>
+  var i18nConfig = JSON.parse('${REPLACE_I18N_CONFIG}');
+  /**
+   * set and check language
+   */ 
+  (function() {
+    // not use i18n
+    if (!i18nConfig.on) return;
+
+    var languageConfigs = {
+      // 使用中的语言
+      uses: ['zh-CN', 'en-US'],
+      // 映射语言
+      map: {
+        'zh': 'zh-CN',
+        'en': 'en-US'
+      },
+      // 获取path中的语言
+      getPathLanguage: function() {
+        var path = location.pathname;
+        var first = path.split('/')[1];
+        var index = this.uses.indexOf(first);
+        return index === -1 ? null : this.uses[index];
+      },
+      // 获取参数中的语言
+      getQueryLanguage: function() {
+        var search = location.search;
+        var i = search.indexOf('?');
+        var qs, qsArr, query={}, lang, index; 
+
+        // no query
+        if (i === -1) return null;
+
+        // query lang
+        qs = search.substr(i + 1);
+        qsArr = qs.split('&');
+        qsArr.forEach(function(str) {
+          var arr = str.split('=');
+          query[arr[0]] = decodeURIComponent(arr[1]);
+        });
+        
+        return this.checkLanguage(query['lang']);
+      },
+      // 获取浏览器语言
+      getBrowserLanguage: function() {
+        var lang = (navigator.language || navigator.browserLanguage).toLowerCase();
+        return this.checkLanguage(lang);
+      },
+      // 获取上一次切换的语言
+      getStoreLanguage: function() {
+        var lang = localStorage.getItem('lang');
+        return this.checkLanguage(lang);
+      },
+      // get cur lang
+      // return {lang, type}
+      getLanguage(types, def) {
+        var langs, lang, useType=null;
+
+        types = types || ['path', 'query', 'store', 'browser'];
+        def = def || 'zh-CN';
+        langs = {
+          path: this.getPathLanguage(),
+          query: this.getQueryLanguage(),
+          browser: this.getBrowserLanguage(),
+          store: this.getStoreLanguage()
+        };
+        lang = null;
+        types.forEach(type => {
+          if (lang) return;
+          if (langs[type]) {
+            useType = type;
+            lang = langs[type];
+          }
+        });
+
+        return { lang: lang || def, type: useType };
+      },
+      configLanguage(uses, map) {
+        this.uses = uses || [];
+        this.map = map || {};
+      },
+      // check lang
+      checkLanguage(lang) {
+        var index = this.uses.indexOf(lang);
+        return index === -1 ?
+          this.map[lang] || null :
+          this.uses[index];
+      }
+    }
+    
+    // config language
+    languageConfigs.configLanguage(i18nConfig.languages, i18nConfig.map);
+    // get language
+    var languageObj = languageConfigs.getLanguage(i18nConfig.detects, i18nConfig.default);
+    
+    // url not have language, redirect to language url
+    if (languageObj.type != 'path' && languageObj.type != 'query') {
+      location.pathname = '/' + languageObj.lang + location.pathname;
+      return;
+    }
+
+    // set window.language
+    window.languageTyoe = languageObj.type;
+    window.language = languageObj.lang;
+  })();
+</script>
