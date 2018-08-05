@@ -5,7 +5,6 @@
 
 const path = require('path');
 const APP_ENV = process.env.APP_ENV || 'dev';
-const prjConf = require('./project.conf');
 const configs = {};
 
 // common
@@ -13,7 +12,7 @@ let common = {
   // 输出目录
   distPath: path.join(__dirname, '../dist'),
   // public path
-  publicPath: prjConf.publicPath,
+  publicPath: '/fe-static/',
   // 是否输出source map
   sourceMap: true,
   // 是否压缩

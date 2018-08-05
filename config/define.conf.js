@@ -13,10 +13,10 @@ let common = {
   'GOOGLE_MAP_AK': JSON.stringify('cjxzljSfdfdsfdsmfdmsfdsxxxxx'),
   'GITHUB_API_BASEURL': JSON.stringify('https://www.github.com/'),
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-  'PUBLIC_PATH': JSON.stringify(prjConf.publicPath),
+  'PUBLIC_PATH': JSON.stringify('/fe-static/'),
 
   // for: string-replace-loader
-  'REPLACE_PUBLIC_PATH': prjConf.publicPath,
+  'REPLACE_PUBLIC_PATH': '/fe-static/',
   'REPLACE_I18N_CONFIG': JSON.stringify(prjConf.i18n)
 }
 

@@ -141,7 +141,7 @@ configExports.context = contextPath;
 configExports.entry = entryObj;
 configExports.output = {
   path: publicConf.distPath,
-  filename: 's/js/[name].[hash].js',
+  filename: 'js/[name].[hash].js',
   publicPath: publicConf.publicPath,
 };
 
@@ -221,14 +221,14 @@ configExports.module = {
       loader: 'url-loader',
       options: {
         limit: 10000,
-        name: 's/imgs/[path][name].[hash].[ext]'
+        name: 'imgs/[path][name].[hash].[ext]'
       }
     },
     {
       test: /\.(mp3|mp4)(\?.*)?$/,
       loader: 'url-loader',
       options: {
-        name: 's/medias/[path][name].[hash].[ext]'
+        name: 'medias/[path][name].[hash].[ext]'
       }
     },
     {
@@ -236,7 +236,7 @@ configExports.module = {
       loader: 'url-loader',
       options: {
         limit: 10000,
-        name: 's/fonts/[path][name].[hash].[ext]'
+        name: 'fonts/[path][name].[hash].[ext]'
       }
     }
   ]

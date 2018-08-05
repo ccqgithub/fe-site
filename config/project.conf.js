@@ -1,8 +1,5 @@
 module.exports = {
 
-  // public path
-  publicPath: '/fe-static/',
-
   // dev server 配置: 不能删
   // build/dev-server.js
   devServer: {
