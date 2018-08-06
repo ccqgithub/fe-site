@@ -58,9 +58,9 @@ react 项目推荐书籍管理模式：
 ## react 项目推荐：
 
 - [react](https://github.com/facebook/react/)。
-- [vue-router](https://github.com/ReactTraining/react-router)。
+- [react-router](https://github.com/ReactTraining/react-router)。
 - [mobx](https://github.com/mobxjs/mobx)。
-- [mobx-ract](https://github.com/mobxjs/mobx-react)。
+- [mobx-react](https://github.com/mobxjs/mobx-react)。
 - [rxjs](https://github.com/ReactiveX/rxjs)。
 - [gentx](https://github.com/ccqgithub/gentx)。
 
