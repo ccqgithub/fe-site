@@ -25,13 +25,27 @@
 - `process.env.NODE_ENV`: 主要配置 `本地开发调试` 和 `发布` 的区别，development, production.
 - `process.env.APP_ENV`: 配置不同发布环境：dev, test, prod 等...
 
-## 使用前必读3：数据管理模式
+## 使用前必读3：推荐数据管理模式
 
 应用中数据管理的所有部分分为三个部分：
 
 - 数据存储：自定义数据Store，LocalStore，SessionStore，Cookie等…
 - 数据流动变换：将一定事件循环内的所有数据变换抽象为数据的流动，比如点击添加用户按钮的过程，会产生这样一个数据流： 点击按钮 => 参数封装器 => 接口请求器 => 结果处理器 => 数据Store => UI。
 - 数据反应：数据改变是产生一些副作用，比如修改数据自动更新UI。
+
+vue项目推荐数据管理模式：
+
+- vuex 用来作为store 和 数据反应。
+- rxjs + gentx 用来管理数据流。
+
+react 项目推荐书籍管理模式：
+
+- mobx + mobx-react 用来作为store 和 数据反应。
+- rxjs + gentx 用来管理数据流。
+
+灵活处理：
+
+- 这只是大项目推荐的数据管理模式，如果你项目较小，只需要store和数据反应，不需要数据流管理，那可以放弃用`rxjs + gentx`，只用mobx或者vuex。
 
 ## vue 项目推荐：
 
@@ -44,9 +58,9 @@
 ## react 项目推荐：
 
 - [react](https://github.com/facebook/react/)。
-- [vue-router](https://github.com/ReactTraining/react-router)。
+- [react-router](https://github.com/ReactTraining/react-router)。
 - [mobx](https://github.com/mobxjs/mobx)。
-- [mobx-ract](https://github.com/mobxjs/mobx-react)。
+- [mobx-react](https://github.com/mobxjs/mobx-react)。
 - [rxjs](https://github.com/ReactiveX/rxjs)。
 - [gentx](https://github.com/ccqgithub/gentx)。
 

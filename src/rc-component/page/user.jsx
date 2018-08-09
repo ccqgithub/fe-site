@@ -19,6 +19,10 @@ class User extends Component {
     return this.props.mainStore.loginUser;
   }
 
+  componentDidMount() {
+    console.log('user===')
+  }
+
   render() {
     return (
       <div className="page page-user">

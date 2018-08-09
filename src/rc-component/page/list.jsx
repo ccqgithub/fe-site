@@ -14,6 +14,7 @@ class List extends Component {
   }
 
   componentDidMount() {
+    console.log('list===')
     this.getList();
   }
 
