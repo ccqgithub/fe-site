@@ -1,22 +1,182 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router, Route, Link } from 'react-router-dom';
+import { Switch } from 'react-router';
+import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 
 import '../less/rc-router-h5.less';
+
+// gender
+class Gender extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      usergender: this.props.form.usergender || ''
+    };
+  }
+  
+  render() {
+    return (
+      <div className="app-page">
+        <p>
+          Form Data: { JSON.stringify(this.props.form) }
+        </p>
+        <p>
+          <label>
+            <input 
+              type="radio" 
+              value="Male"
+              checked={this.state.usergender === 'Male'}
+              onChange={() => this.setState({ usergender: 'Male' })}
+            /> Male
+          </label>
+          <span> </span>
+          <label>
+            <input 
+              type="radio" 
+              value="FeMale"
+              checked={this.state.usergender === 'FeMale'}
+              onChange={() => this.setState({ usergender: 'FeMale' })}
+            /> FeMale
+          </label>
+        </p>
+        <p>
+          <a 
+            href="javascript:;"
+            onClick={() => {
+              this.props.updateGender(this.state.usergender);
+              this.props.history.goBack();
+            }}
+          > Save Gender </a>
+        </p>
+      </div>
+    );
+  }
+}
+
+// form
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: this.props.form.username || '',
+      usergender: this.props.form.usergender || '',
+    }
+  }
+  
+  render() {
+    let url = this.props.parentUrl + '/form';
+
+    return (
+      <Fragment>
+        <div className="app-page">
+          <p>
+            Page A Data: { JSON.stringify(this.props.form )}
+          </p>
+          <p>
+            Form Data: { JSON.stringify(this.state) }
+          </p>
+          <p>
+            username: 
+            <input 
+              type="text" 
+              value={this.state.username} 
+              onChange={e => this.setState({ username: e.target.value }) }
+            />
+          </p>
+          <p>
+            usergender: { this.state.usergender }
+            <a 
+              href="javascript:;"
+              onClick={() => {
+                this.props.history.push(`${url}/gender`)
+              }}
+            > Pick Gender </a>
+          </p>
+          <p>
+            <a 
+              href="javascript:;"
+              onClick={() => {
+                this.props.updateUser(this.state);
+                this.props.history.goBack();
+              }}
+            > Save Form </a>
+          </p>
+        </div>
+
+        {/* gender */}
+        <Route  
+          path={`${url}/gender`}
+          render={({ match, ...rest }) => {
+            if (!match) return null;
+            return (
+              <Gender 
+                {...rest} 
+                parentUrl={url}
+                form={this.state} 
+                updateGender={(gender) => {
+                  this.setState({ usergender: gender });
+                }} 
+              />
+            )
+          }}
+        />
+      </Fragment>
+    );
+    return <div className="app-page">from</div>
+  }
+}
 
 // page a
 class PageA extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      page: 'a',
+      username: '',
+      usergender: ''
+    }
   }
   
   render() {
-    // let { match, location, history, route } = this.props;
+    let { route, match } = this.props;
+    let url = match.url;
 
+    return (
+      <React.Fragment> 
+        <div className="app-page">
+          <p>
+            Page A Data: { JSON.stringify(this.state) }
+          </p>
+          <p>
+            <a 
+              href="javascript:;"
+              onClick={() => {
+                this.props.history.push(`${url}/form`)
+              }}
+            > Edit User </a>
+          </p>
+        </div>
 
-
-    return <div></div>
+        {/* form */}
+        <Route  
+          path={`${url}/form`}
+          render={({ match, ...rest }) => {
+            if (!match) return null;
+            return (
+              <Form 
+                {...rest} 
+                parentUrl={url}
+                form={this.state} 
+                updateUser={(user) => {
+                  this.setState({ username: user.username, usergender: user.usergender });
+                }} 
+              />
+            )
+          }}
+        />
+      </React.Fragment>
+    );
   }
 }
 
@@ -28,19 +188,7 @@ class PageB extends React.Component {
   }
   
   render() {
-    return <div></div>
-  }
-}
-
-// page c
-class PageC extends React.Component {
-  constructor(props) {
-    super(props);
-    
-  }
-  
-  render() {
-    return <div></div>
+    return <div>b</div>
   }
 }
 
@@ -52,98 +200,79 @@ class PageCDetail extends React.Component {
   }
   
   render() {
-    return <div></div>
+    return <div>c detail</div>
   }
 }
 
-// form
-class Form extends React.Component {
+// page c
+class PageC extends React.Component {
   constructor(props) {
     super(props);
     
   }
   
   render() {
-    return <div></div>
+    return <div>c</div>
   }
 }
-
-// pick
-class Pick extends React.Component {
-  constructor(props) {
-    super(props);
-    
-  }
-  
-  render() {
-    return <div></div>
-  }
-}
-
-// 路由
-const routes = [{
-  path: '/a',
-  component: PageA,
-  children: [{
-    path: '/form',
-    component: Form,
-    children: [{
-      path: '/pick',
-      component: Pick
-    }]
-  }]
-}, {
-  path: '/b',
-  component: PageB,
-  children: [{
-    path: '/pick',
-    component: Pick
-  }]
-}, {
-  path: '/c',
-  component: PageC,
-  children: [{
-    path: '/:id',
-    component: PageCDetail,
-    children: [{
-      path: '/pick',
-      component: Pick
-    }]
-  }]
-}];
 
 // app
 class App extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.history = createBrowserHistory();
   }
   
   render() {
     let routes = this.props.routes;
 
-    const navs = routes.map(item => {
-      return (
-        <Link to={{ pathname: item.path }}> {item.path} </Link>
-      );
-    });
-
-    const pages = routes.map(item => {
-      return (
-        <Route route={item}></Route>
-      );
-    });
+    const ListItemLink = ({ to, ...rest }) => (
+      <Route path={to} children={({ match }) => (
+        <li className={match ? 'active' : ''}>
+          <Link to={to} {...rest}>{to}</Link>
+        </li>
+      )}/>
+    );
 
     return (
       <div className="app">
-        <ul className="app-nav">
-          { navs }
+        <ul className="app-navs">
+          <ListItemLink to='/a' />
+          <ListItemLink to='/b' />
+          <ListItemLink to='/c' />
         </ul>
         <div className="app-pages">
-
+          <Switch>
+            <Route path="/a" component={PageA} />
+            <Route path="/b" component={PageB} />
+            <Route path="/c" component={PageC} />
+            <Route render={() => {
+              return (
+                <div className="app-page">
+                  <p>
+                    React Router H5 Demo
+                  </p>
+                  <p>
+                    '/a': 层层递进，不能直接访问子url
+                  </p>
+                  <p>
+                    '/b':
+                  </p>
+                  <p>
+                    '/c': 
+                  </p>
+                </div>
+              )
+            }} />
+          </Switch>
         </div>
       </div>
     );
   }
 }
+
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById('app')
+);

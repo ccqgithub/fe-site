@@ -1,0 +1,90 @@
+@import (less) "~gent.css/css/normalize/reset.css";
+@import (less) "~gent.css/css/safe-area.css";
+
+html {
+  background: #fff fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Source Han Sans", sans-serif;
+  color: #000;
+  background: url(../asset/image/timg.jpeg) no-repeat;
+  background-size: cover;
+}
+
+*, *::before, *::after {
+  box-sizing:inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.app {
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.app-navs {
+  height: 50px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  li {
+    text-align: center;
+    border-left: 1px solid #ddd;
+    flex: 1;
+    height: 100%;
+  }
+
+  li:first-child {
+    border: none;
+  }
+
+  a {
+    display: block;
+    line-height: 50px;
+  }
+
+  li.active a {
+    color: red;
+  }
+}
+
+.app-pages {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-page {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+  padding: 20px;
+
+  p {
+    margin: 10px 0;
+    border: 1px solid rgb(18, 32, 218);
+    padding: 10px;
+    word-break: break-all;
+  }
+}
