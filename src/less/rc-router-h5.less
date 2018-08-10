@@ -80,6 +80,7 @@ html, body {
   overflow: auto;
   background: #fff;
   padding: 20px;
+  border: 1px solid rgb(52, 46, 143);
 
   p {
     margin: 10px 0;
@@ -87,4 +88,61 @@ html, body {
     padding: 10px;
     word-break: break-all;
   }
+}
+
+.app-page-a {
+  background: red;
+}
+
+.app-page-b {
+  background: green;
+}
+
+.app-page-c {
+  background: blue;
+  a {
+    color: #fff;
+  }
+}
+
+// fade transition
+.entry-page-enter {
+  opacity: 0;
+  z-index: 10;
+}
+
+.entry-page-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.entry-page-exit {
+  opacity: 1;
+  z-index: 1;
+}
+
+.entry-page-exit-active {
+  transition: opacity 500ms ease-in;
+  opacity: 0.01;
+}
+
+// page transition
+.inner-page-enter,
+.inner-page-appear {
+  transform: translateX(100%);
+}
+
+.inner-page-enter-active,
+.inner-page-appear-active {
+  transform: translateX(0);
+  transition: transform 250ms ease-in;
+}
+
+.inner-page-exit {
+  transform: translateX(0);
+}
+
+.inner-page-exit-active {
+  transform: translateX(-100%);
+  transition: transform 250ms ease-in;
 }

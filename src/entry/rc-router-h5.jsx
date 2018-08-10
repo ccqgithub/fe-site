@@ -1,10 +1,68 @@
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
-import { Switch } from 'react-router';
+import Modal from 'react-modal';
+import { Switch, matchPath } from 'react-router';
 import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import '../less/rc-router-h5.less';
+
+// add transiton route to inner page
+// props: component, path, exact, location, ...other
+class InnerPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: null,
+      match: null
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    let {path, exact, location} = props;
+    let match = matchPath(location.pathname, {
+      path,
+      exact
+    });
+
+    return {
+      location: match ? location : state.location,
+      match
+    }
+  }
+
+  render() {
+    let { path, exact, component: Component } = this.props;
+
+    if (!this.state.location) return null;
+
+    return (
+      <CSSTransition 
+        in={!!this.state.match} 
+        classNames="inner-page" 
+        timeout={250} 
+        appear={true}
+        unmountOnExit={true}
+      >
+        <Route  
+          location={this.state.location}
+          path={path}
+          exact={exact}
+          render={({ match, ...rest }) => {
+            if (!match) return null;
+            return (
+              <Component 
+                {...this.props}
+                {...rest}
+              />
+            )
+          }}
+        />
+      </CSSTransition>
+    )
+  }
+}
 
 // gender
 class Gender extends React.Component {
@@ -65,11 +123,11 @@ class Form extends React.Component {
   }
   
   render() {
-    let url = this.props.parentUrl + '/form';
+    let url = this.props.parentPath + '/form';
 
     return (
       <Fragment>
-        <div className="app-page">
+        <div className="app-page app-page-form">
           <p>
             Page A Data: { JSON.stringify(this.props.form )}
           </p>
@@ -105,21 +163,17 @@ class Form extends React.Component {
         </div>
 
         {/* gender */}
-        <Route  
+        <InnerPage
+          component={Gender}
           path={`${url}/gender`}
-          render={({ match, ...rest }) => {
-            if (!match) return null;
-            return (
-              <Gender 
-                {...rest} 
-                parentUrl={url}
-                form={this.state} 
-                updateGender={(gender) => {
-                  this.setState({ usergender: gender });
-                }} 
-              />
-            )
-          }}
+          exact={false}
+          location={this.props.location}
+
+          parentPath={url}
+          form={ this.state }
+          updateGender={(gender) => {
+            this.setState({ usergender: gender });
+          }} 
         />
       </Fragment>
     );
@@ -139,12 +193,17 @@ class PageA extends React.Component {
   }
   
   render() {
-    let { route, match } = this.props;
+    let { route, match, location } = this.props;
     let url = match.url;
+    let formUrl = `${url}/form`;
+    let matchForm = matchPath(location.pathname, {
+      path: formUrl,
+      exact: false
+    });
 
     return (
       <React.Fragment> 
-        <div className="app-page">
+        <div className="app-page app-page-a">
           <p>
             Page A Data: { JSON.stringify(this.state) }
           </p>
@@ -152,30 +211,41 @@ class PageA extends React.Component {
             <a 
               href="javascript:;"
               onClick={() => {
-                this.props.history.push(`${url}/form`)
+                this.props.history.push(formUrl)
               }}
             > Edit User </a>
           </p>
         </div>
 
         {/* form */}
-        <Route  
-          path={`${url}/form`}
-          render={({ match, ...rest }) => {
-            if (!match) return null;
-            return (
-              <Form 
-                {...rest} 
-                parentUrl={url}
-                form={this.state} 
-                updateUser={(user) => {
-                  this.setState({ username: user.username, usergender: user.usergender });
-                }} 
-              />
-            )
-          }}
+        <InnerPage
+          component={Form}
+          path={formUrl}
+          exact={false}
+          location={location}
+
+          parentPath={url}
+          form={ this.state }
+          updateUser={(user) => {
+            this.setState({ username: user.username, usergender: user.usergender });
+          }} 
         />
       </React.Fragment>
+    );
+  }
+}
+
+// page b detail
+class PageBDetail extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  render() {
+    return (
+      <div className="app-page app-page-c-detail">
+        The Detail Id: { this.props.match.params.id }
+      </div>
     );
   }
 }
@@ -184,23 +254,25 @@ class PageA extends React.Component {
 class PageB extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      users: [1,2,3,4,6]
+    };
   }
   
   render() {
-    return <div>b</div>
-  }
-}
+    const users = this.state.users.map(item => {
+      return (
+        <p key={item}>
+          <Link to={`/b/${item}`}> View User Detail: { item } </Link>
+        </p>
+      );
+    });
 
-// page c detail
-class PageCDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    
-  }
-  
-  render() {
-    return <div>c detail</div>
+    return (
+      <div className="app-page app-page-b">
+        { users }
+      </div>
+    );
   }
 }
 
@@ -212,7 +284,36 @@ class PageC extends React.Component {
   }
   
   render() {
-    return <div>c</div>
+    let url = this.props.match.url;
+
+    const MyModal = ({match, history}) => {
+      return (
+        <Modal 
+          ariaHideApp={false}
+          isOpen={!!match}
+          shouldCloseOnOverlayClick={false}
+        >
+          <p>Modal text!</p>
+          <button onClick={() => history.goBack()}>
+            Close Modal
+          </button>
+        </Modal>
+      );
+    }
+
+    return (
+      <div className="app-page app-page-c">
+        <div>
+          <a href="javascript:;" onClick={() => {
+            this.props.history.push(`${url}/mymodal`);
+          }}> Show Modal </a>
+        </div>
+
+        <Route path={`${url}/mymodal`} children={(props) => {
+          return <MyModal {...props} /> 
+        }}/>
+      </div>
+    );
   }
 }
 
@@ -223,9 +324,7 @@ class App extends React.Component {
   }
   
   render() {
-    let routes = this.props.routes;
-
-    const ListItemLink = ({ to, ...rest }) => (
+    const NavLink = ({ to, ...rest }) => (
       <Route path={to} children={({ match }) => (
         <li className={match ? 'active' : ''}>
           <Link to={to} {...rest}>{to}</Link>
@@ -233,46 +332,57 @@ class App extends React.Component {
       )}/>
     );
 
+    let transitionKey = this.props.location.pathname
+      .replace(/^\/(\w+).*$/, '/$1');
+
     return (
-      <div className="app">
+      <Fragment>
         <ul className="app-navs">
-          <ListItemLink to='/a' />
-          <ListItemLink to='/b' />
-          <ListItemLink to='/c' />
+          <NavLink to='/a' />
+          <NavLink to='/b' />
+          <NavLink to='/c' />
         </ul>
-        <div className="app-pages">
-          <Switch>
-            <Route path="/a" component={PageA} />
-            <Route path="/b" component={PageB} />
-            <Route path="/c" component={PageC} />
-            <Route render={() => {
-              return (
-                <div className="app-page">
-                  <p>
-                    React Router H5 Demo
-                  </p>
-                  <p>
-                    '/a': 层层递进，不能直接访问子url
-                  </p>
-                  <p>
-                    '/b':
-                  </p>
-                  <p>
-                    '/c': 
-                  </p>
-                </div>
-              )
-            }} />
-          </Switch>
-        </div>
-      </div>
+        <TransitionGroup className="app-pages">
+          <CSSTransition key={transitionKey} classNames="entry-page" timeout={500}>
+            <Switch location={this.props.location}>
+              <Route path="/a" component={PageA} exact={false} />
+
+              <Route path="/b" component={PageB} exact={true} />
+              <Route path="/b/:id" component={PageBDetail} exact={true} />
+
+              <Route path="/c" component={PageC} exact={false} />
+
+              <Route render={() => {
+                return (
+                  <div className="app-page">
+                    <p>
+                      React Router H5 Demo
+                    </p>
+                    <p>
+                      '/a': 子页面层层递进，不能单独访问
+                    </p>
+                    <p>
+                      '/b': 子页面单独访问
+                    </p>
+                    <p>
+                      '/c': 路由弹窗
+                    </p>
+                  </div>
+                )
+              }} exact={false}/>
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      </Fragment>
     );
   }
 }
 
 ReactDOM.render(
   <Router>
-    <App />
+    <Route render={(props) => {
+      return <App {...props} />
+    }}/>
   </Router>,
   document.getElementById('app')
 );
