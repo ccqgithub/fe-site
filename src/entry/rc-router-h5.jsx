@@ -8,6 +8,32 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import '../less/rc-router-h5.less';
 
+// get first matched url from routes 
+// with current location
+const getFirstUrlFromRoutes = (routes, location) => {
+  let key = null;
+
+  routes.some(item => {
+    let match = matchPath(location.pathname, {
+      path: item.path,
+      exact: false
+    });
+
+    let childMatch = matchPath(location.pathname, {
+      path: item.childPaths || [],
+      exact: true
+    });
+
+    if (match || childMatch) {
+      key = match.url;
+    }
+
+    return !!key;
+  });
+
+  return key;
+}
+
 // add transiton route to inner page
 // props: component, path, exact, location, ...other
 class InnerPage extends React.Component {
@@ -321,6 +347,29 @@ class PageC extends React.Component {
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    // pages
+    this.routes = [{
+      name: 'a',
+      path: '/a',
+      childPaths: ['/a/form', '/a/form/gender'],
+      component: PageA
+    }, {
+      name: 'b',
+      path: '/b',
+      childPaths: ['/b/modal'],
+      component: PageB
+    }, {
+      name: 'b-dtl',
+      path: '/b/:id',
+      childPaths: ['/b/:id/gender'],
+      component: PageBDetail
+    }, {
+      name: 'c',
+      path: '/c',
+      childPaths: ['/c/modal'],
+      component: PageC
+    }];
   }
   
   render() {
@@ -332,8 +381,8 @@ class App extends React.Component {
       )}/>
     );
 
-    let transitionKey = this.props.location.pathname
-      .replace(/^\/(\w+).*$/, '/$1');
+    let transitionKey = getFirstUrlFromRoutes(this.routes, this.props.location);
+    console.log(transitionKey);
 
     return (
       <Fragment>
@@ -345,13 +394,11 @@ class App extends React.Component {
         <TransitionGroup className="app-pages">
           <CSSTransition key={transitionKey} classNames="entry-page" timeout={500}>
             <Switch location={this.props.location}>
-              <Route path="/a" component={PageA} exact={false} />
-
-              <Route path="/b" component={PageB} exact={true} />
-              <Route path="/b/:id" component={PageBDetail} exact={true} />
-
-              <Route path="/c" component={PageC} exact={false} />
-
+              {
+                this.routes.map(item => {
+                  return <Route key={item.path} path={item.path} component={item.component} exact={false} />
+                })
+              }
               <Route render={() => {
                 return (
                   <div className="app-page">

@@ -1,0 +1,137 @@
+@import (less) "~gent.css/css/normalize/reset.css";
+@import (less) "~gent.css/css/safe-area.css";
+
+html {
+  background: #fff fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Source Han Sans", sans-serif;
+  color: #000;
+  background: url(../asset/image/timg.jpeg) no-repeat;
+  background-size: cover;
+}
+
+*, *::before, *::after {
+  box-sizing:inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+html, body {
+  height: 100%;
+  background: #000;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: stretch;
+}
+
+.app-navs {
+  width: 200px;
+  background: #000;
+  border-right: 1px solid #ddd;
+
+  li {
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  a {
+    display: block;
+    line-height: 50px;
+    color: #fff;
+  }
+
+  li.active a {
+    color: red;
+  }
+}
+
+.app-con {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.app-ctrl {
+  height: 50px;
+  padding: 10px;
+  background: rgb(47, 57, 150);
+  border-bottom: 1px solid #000;
+}
+
+.app-pages {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-page {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid rgb(52, 46, 143);
+
+  p {
+    margin: 10px 0;
+    border: 1px solid rgb(18, 32, 218);
+    padding: 10px;
+    word-break: break-all;
+  }
+}
+
+// fade transition
+.entry-page-enter {
+  opacity: 0;
+  z-index: 10;
+}
+
+.entry-page-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.entry-page-exit {
+  opacity: 1;
+  z-index: 1;
+}
+
+.entry-page-exit-active {
+  transition: opacity 500ms ease-in;
+  opacity: 0.01;
+}
+
+// page transition
+.inner-page-enter,
+.inner-page-appear {
+  transform: translateX(100%);
+}
+
+.inner-page-enter-active,
+.inner-page-appear-active {
+  transform: translateX(0);
+  transition: transform 250ms ease-in;
+}
+
+.inner-page-exit {
+  transform: translateX(0);
+}
+
+.inner-page-exit-active {
+  transform: translateX(-100%);
+  transition: transform 250ms ease-in;
+}
