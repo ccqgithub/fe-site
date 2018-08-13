@@ -1,5 +1,5 @@
-export function warning(condition, message) {
-  if (!condition || !console || !console.warn) return;
+export function warning(message) {
+  if (!console || !console.warn) return;
   console.warn(message);
 }
 

@@ -1,4 +1,4 @@
-import { warning, copyJson } from './utils';
+import { warning } from './utils';
 
 const Router = {
   props: {
@@ -12,19 +12,13 @@ const Router = {
 
   provide () {
     return {
-      router: this.router,
-    }
-  },
-
-  computed: {
-    router() {
-      return copyJson({
+      router: {
         history: this.history,
         route: {
           location: this.history.location,
           match: this.match
         }
-      })
+      }
     }
   },
 
@@ -47,7 +41,7 @@ const Router = {
 
   watch: {
     history(val, oldVal) {
-      warning(true, 'You cannot change <Router history>');
+      warning('You cannot change <Router history>');
     }
   },
 
@@ -62,7 +56,7 @@ const Router = {
     }
   },
 
-  render(createElement) {
+  render() {
     return this.$slots.default[0];
   }
 }
