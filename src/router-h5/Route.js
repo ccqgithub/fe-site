@@ -8,7 +8,8 @@ const Route = {
     exact: Boolean,
     strict: Boolean,
     sensitive: Boolean,
-    location: Object
+    location: Object,
+    tag: String
   },
 
   inject: ['router'],
