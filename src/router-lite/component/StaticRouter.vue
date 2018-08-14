@@ -1,3 +1,10 @@
+<template>
+  <router v-bind="childProps">
+    <slot></slot>
+  </router>
+</template>
+
+<script>
 import { warning } from './utils';
 import { createLocation, createPath } from "history";
 import Router from "./Router";
@@ -38,6 +45,10 @@ const staticHandler = methodName => () => {
 const noop = () => {};
 
 const StaticRouter = {
+  components: {
+    Router
+  },
+  
   props: {
     // just use to check if user pass history
     history: {
@@ -52,7 +63,9 @@ const StaticRouter = {
     },
     context: {
       type: Object,
-      required: true
+      default() {
+        return {};
+      }
     },
     location: {
       type: [String, Object],
@@ -68,22 +81,43 @@ const StaticRouter = {
     };
   },
 
-  beforeCreate() {
-    this.createHref = (path) => addLeadingSlash(this.basename + createURL(path));
-    this.handlePush = (location) => {
+  computed: {
+    childProps() {
+      let { basename, context, location } = this;
+
+      const history = {
+        action: "POP",
+        location: stripBasename(basename, createLocation(location)),
+        go: staticHandler("go"),
+        goBack: staticHandler("goBack"),
+        goForward: staticHandler("goForward"),
+        createHref: (...rest) => this.createHref(...rest),
+        push: (...rest) => this.handlePush(...rest),
+        replace: (...rest) => this.handleReplace(...rest), 
+        listen: () => noop,
+        block: () => noop
+      };
+
+      return { history };
+    }
+  },
+
+  methods: {
+    createHref(path) {
+      return addLeadingSlash(this.basename + createURL(path));
+    },
+    handlePush(location) {
       const { basename, context } = this;
       context.action = "PUSH";
       context.location = addBasename(basename, createLocation(location));
       context.url = createURL(context.location);
-    }
-    this.handleReplace = (location) => {
+    },
+    handleReplace(location) {
       const { basename, context } = this;
       context.action = "REPLACE";
       context.location = addBasename(basename, createLocation(location));
       context.url = createURL(context.location);
     }
-    this.handleListen = () => noop;
-    this.handleBlock = () => noop;
   },
 
   beforeMount() {
@@ -93,29 +127,8 @@ const StaticRouter = {
         'use `import { Router }` instead of `import { StaticRouter as Router }`.'
       )
     }
-  },
-
-  render(h) {
-    let { basename, context, location, ...props } = this.$props;
-
-    const history = {
-      createHref: this.createHref,
-      action: "POP",
-      location: stripBasename(basename, createLocation(location)),
-      push: this.handlePush,
-      replace: this.handleReplace,
-      go: staticHandler("go"),
-      goBack: staticHandler("goBack"),
-      goForward: staticHandler("goForward"),
-      listen: this.handleListen,
-      block: this.handleBlock
-    };
-
-    return h(Router, {
-      ...props,
-      history: history
-    });
   }
 }
 
 export default StaticRouter;
+</script>

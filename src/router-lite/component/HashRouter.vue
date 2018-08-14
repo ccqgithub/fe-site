@@ -1,8 +1,19 @@
+<template>
+  <router :history="childHistory">
+    <slot></slot>
+  </router>
+</template>
+
+<script>
 import { warning } from './utils';
 import Router from './Router';
 import { createHashHistory as createHistory } from "history";
 
 const HashRouter = {
+  components: {
+    Router
+  },
+
   props: {
     // just use to check if user pass history
     history: {
@@ -20,12 +31,16 @@ const HashRouter = {
     getUserConfirmation: Function
   },
 
-  beforeCreate() {
-    this._history = createHistory({
+  data() {
+    let history = createHistory({
       basename: this.basename,
       hashType: this.hashType,
       getUserConfirmation: this.getUserConfirmation
     });
+
+    return {
+      childHistory: history
+    }
   },
 
   beforeMount() {
@@ -35,13 +50,8 @@ const HashRouter = {
         'use `import { Router }` instead of `import { HashRouter as Router }`.'
       )
     }
-  },
-
-  render(createElement) {
-    return createElement(Router, {
-      history: this._history
-    }, this.$slots.default);
   }
 }
 
 export default HashRouter;
+</script>

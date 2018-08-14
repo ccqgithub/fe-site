@@ -1,14 +1,24 @@
+<template>
+  <single>
+    <slot></slot>
+  </single>
+</template>
+
+<script>
 import { warning } from './utils';
+import Single from '../util/single';
 
 const Router = {
+  components: {
+    Single
+  },
+
   props: {
     history: {
       type: Object,
       required: true
     }
   },
-
-  // inject: ['router'],
 
   provide () {
     return {
@@ -54,11 +64,8 @@ const Router = {
         isExact: pathname === "/"
       };
     }
-  },
-
-  render() {
-    return this.$slots.default[0];
   }
 }
 
 export default Router;
+</script>

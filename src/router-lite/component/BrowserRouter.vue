@@ -1,8 +1,19 @@
+<template>
+  <router :history="childHistory">
+    <slot></slot>
+  </router>
+</template>
+
+<script>
 import { warning } from './utils';
 import Router from './Router';
 import { createBrowserHistory as createHistory } from "history";
 
 const BrowserRouter = {
+  components: {
+    Router
+  },
+
   props: {
     // just use to check if user pass history
     history: {
@@ -17,13 +28,17 @@ const BrowserRouter = {
     getUserConfirmation: Function
   },
 
-  beforeCreate() {
-    this._history = createHistory({
+  data() {
+    let history = createHistory({
       basename: this.basename,
       forceRefresh: this.forceRefresh,
       getUserConfirmation: this.getUserConfirmation,
       keyLength: this.keyLength
     });
+
+    return {
+      childHistory: history
+    }
   },
 
   beforeMount() {
@@ -33,13 +48,8 @@ const BrowserRouter = {
         'use `import { Router }` instead of `import { BrowserRouter as Router }`.'
       )
     }
-  },
-
-  render(createElement) {
-    return createElement(Router, {
-      history: this._history
-    }, this.$slots.default);
   }
 }
 
 export default BrowserRouter;
+</script>

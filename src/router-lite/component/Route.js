@@ -9,7 +9,7 @@ const Route = {
     strict: Boolean,
     sensitive: Boolean,
     location: Object,
-    tag: String
+    component: Object
   },
 
   inject: ['router'],
@@ -24,12 +24,6 @@ const Route = {
         }
       }
     };
-  },
-
-  data() {
-    return {
-      //
-    }
   },
 
   computed: {
@@ -48,24 +42,22 @@ const Route = {
     }
   },
 
-  render() {
-    const { match, children, component, render } = this;
+  render(h) {
+    let { computedMatch, location, path, strict, exact, sensitive, ...props } = this.$props;
+    const { match } = this;
     const { history, route, staticContext } = this.router;
     const location = this.location || route.location;
-    const props = { match, location, history, staticContext };
+    const childProps = { match, location, history, staticContext };
 
-    // if (!this.$slots.default)
+    if (!match) return null;
 
-    if (component) return match ? React.createElement(component, props) : null;
-
-    if (render) return match ? render(props) : null;
-
-    if (typeof children === "function") return children(props);
-
-    if (children && !isEmptyChildren(children))
-      return React.Children.only(children);
-
-    return null;
+    if (this.component) {
+      return h(this.component, {...props, ...childProps});
+    }
+    
+    if (this.$scopedSlots.default) {
+      return this.$scopedSlots.default(childProps)[0];
+    }
   }
 }
 

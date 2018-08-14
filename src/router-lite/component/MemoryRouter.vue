@@ -1,8 +1,19 @@
+<template>
+  <router :history="childHistory">
+    <slot></slot>
+  </router>
+</template>
+
+<script>
 import { warning } from './utils';
 import Router from './Router';
 import { createMemoryHistory as createHistory } from "history";
 
 const MemoryRouter = {
+  components: {
+    Router
+  },
+
   props: {
     // just use to check if user pass history
     history: {
@@ -17,13 +28,17 @@ const MemoryRouter = {
     keyLength: Number
   },
 
-  beforeCreate() {
-    this._history = createHistory({
+  data() {
+    let history = createHistory({
       initialEntries: this.initialEntries,
       initialIndex: this.initialIndex,
       getUserConfirmation: this.getUserConfirmation,
       keyLength: this.keyLength
     });
+
+    return {
+      childHistory: history
+    }
   },
 
   beforeMount() {
@@ -33,13 +48,8 @@ const MemoryRouter = {
         'use `import { Router }` instead of `import { MemoryRouter as Router }`.'
       )
     }
-  },
-
-  render(createElement) {
-    return createElement(Router, {
-      history: this._history
-    }, this.$slots.default);
   }
 }
 
 export default MemoryRouter;
+</script>
