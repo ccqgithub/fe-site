@@ -1,6 +1,16 @@
+<template>
+  <empty></empty>
+</template>
+
+<script>
 import { warning } from './utils';
+import Empty from '../util/empty';
 
 const Prompt = {
+  components: {
+    Empty
+  },
+
   props: {
     when: {
       type: Boolean,
@@ -54,9 +64,8 @@ const Prompt = {
 
   beforeDestroy() {
     this.disable();
-  },
-
-  template: `<span v-if="false"></span>`
+  }
 }
 
 export default Prompt;
+</script>

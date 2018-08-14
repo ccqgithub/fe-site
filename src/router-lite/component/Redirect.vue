@@ -1,8 +1,18 @@
+<template>
+  <empty></empty>
+</template>
+
+<script>
 import { warning } from './utils';
 import { createLocation, locationsAreEqual } from "history";
 import generatePath from "./generatePath";
+import Empty from '../util/empty';
 
 const Redirect = {
+  components: {
+    Empty
+  },
+
   props: {
     computedMatch: Object,
     push: {
@@ -81,9 +91,8 @@ const Redirect = {
         history.replace(to);
       }
     }
-  },
-
-  template: `<span v-if="false"></span>`
+  }
 }
 
 export default Redirect;
+</script>
