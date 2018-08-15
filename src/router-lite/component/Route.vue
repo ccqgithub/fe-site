@@ -1,5 +1,14 @@
+<template>
+  <single v-if="match">
+    <component v-if="component" :is="component" v-bind="childProps"></component>
+    <slot v-bind="childProps"></slot>
+  </single>
+</template>
+
+<script>
 import { warning } from './utils';
 import matchPath from "./matchPath";
+import Single from '../util/Single';
 
 const Route = {
   props: {
@@ -39,26 +48,17 @@ const Route = {
       const pathname = (location || route.location).pathname;
   
       return matchPath(pathname, { path, strict, exact, sensitive }, route.match);
-    }
-  },
+    },
 
-  render(h) {
-    let { computedMatch, location, path, strict, exact, sensitive, ...props } = this.$props;
-    const { match } = this;
-    const { history, route, staticContext } = this.router;
-    const location = this.location || route.location;
-    const childProps = { match, location, history, staticContext };
+    childProps() {
+      let { computedMatch, location, match } = this;
+      const { history, route, staticContext } = this.router;
+      const location = this.location || route.location;
 
-    if (!match) return null;
-
-    if (this.component) {
-      return h(this.component, {...props, ...childProps});
-    }
-    
-    if (this.$scopedSlots.default) {
-      return this.$scopedSlots.default(childProps)[0];
+      return { ...this.$attrs, match, location, history, staticContext };
     }
   }
 }
 
 export default Route;
+</script>

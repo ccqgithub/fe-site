@@ -1,10 +1,35 @@
+<template>
+  <single>
+    <tag :
+      tag="tag" 
+      :class="class" 
+      :style="style" 
+      :target="target" 
+      :href="href"
+      v-bind="$attrs"
+      @click="handleClick"
+    >
+      <slot></slot>
+    </tag>
+
+    <slot :href="href" :history="router.history"></slot>
+  </single>
+</template>
+
+<script>
 import { warning } from './utils';
 import { createLocation } from "history";
+import Tag from '../util/Tag';
+import Single from '../util/Single';
 
 const isModifiedEvent = event =>
   !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 
 const Link = {
+  components: {
+    Tag
+  },
+
   props: {
     // to path
     to: {
@@ -34,6 +59,19 @@ const Link = {
 
   inject: ['router'],
 
+  computed: {
+    href() {
+      const { history } = this.router;
+      const location =
+        typeof to === "string"
+          ? createLocation(to, null, null, history.location)
+          : to;
+      const href = history.createHref(location);
+
+      return href;
+    }
+  },
+
   methods: {
     handleClick = event => {
       this.$emit('click', event);
@@ -51,7 +89,7 @@ const Link = {
     }
   },
 
-  render(h) {
+  beforeMount() {
     if (!this.to) {
       throw new Error('You must specify the "to" property');
     }
@@ -59,36 +97,8 @@ const Link = {
     if (!this.router) {
       warning('You should not use <Link> outside a <Router>');
     }
-
-    const { history } = this.router;
-    const location =
-      typeof to === "string"
-        ? createLocation(to, null, null, history.location)
-        : to;
-    const href = history.createHref(location);
-
-    // scoped slot
-    if (this.$scopedSlots.default) {
-      let scopedChildren = this.$scopedSlots.default({
-        href,
-        history
-      });
-      return scopedChildren.length ? scopedChildren[0] : null;
-    }
-
-    return h(tag, {
-      class: this.class,
-      style: this.style,
-      attrs: {
-        ...this.$attrs,
-        target: this.target,
-        href: href
-      },
-      on: {
-        click: this.handleClick
-      }
-    }, this.$children); 
   }
 }
 
 export default Link;
+</script>
