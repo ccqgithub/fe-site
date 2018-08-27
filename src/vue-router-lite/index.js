@@ -13,6 +13,8 @@ import generatePath from "./util/generatePath";
 import matchPath from "./util/matchPath";
 import withRouter from "./util/withRouter";
 let withRouter = 1;
+var withRouter;
+var withRouter;
 
 export {
   Router,
