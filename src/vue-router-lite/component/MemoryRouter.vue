@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { warning } from './utils';
-import Router from './Router';
 import { createMemoryHistory as createHistory } from "history";
+import { warning } from '../util/utils';
+import Router from './Router';
 
 const MemoryRouter = {
   components: {

@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { gentx } from 'gentx';
 import NProgress from 'nprogress';
 import { of } from 'rxjs';
-import { todoFlows } from '../../data/flows/todo';
+import { todoFlows } from '../../../data/flows/todo';
 
 @inject('mainStore', 'todoStore')
 @observer

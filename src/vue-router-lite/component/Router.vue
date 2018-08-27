@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { warning } from './utils';
-import Single from '../util/single';
+import { warning, copyJson } from '../util/utils';
+import Single from '../util/Single';
 
 const Router = {
   components: {
@@ -20,28 +20,25 @@ const Router = {
     }
   },
 
-  provide () {
+  provide() {
     return {
       router: {
         history: this.history,
-        route: {
-          location: this.history.location,
-          match: this.match
-        }
+        route: this.route
       }
     }
   },
 
   data() {
     return {
-      match: this.computeMatch(this.history.location.pathname)
+      route: this.computeRoute(this.history)
     }
   },
 
   beforeMount() {
-    const { history } = this.props;
+    const { history } = this;
     this.unlisten = history.listen(() => {
-      this.match = this.computeMatch(history.location.pathname);
+      this.route = this.computeRoute(history);
     });
   },
 
@@ -56,13 +53,17 @@ const Router = {
   },
 
   methods: {
-    computeMatch(pathname) {
+    computeRoute(history) {
+      let pathname = history.location.pathname;
       return {
-        path: "/",
-        url: "/",
-        params: {},
-        isExact: pathname === "/"
-      };
+        location: copyJson(history.location),
+        match: {
+          path: "/",
+          url: "/",
+          params: {},
+          isExact: pathname === "/"
+        }
+      }
     }
   }
 }

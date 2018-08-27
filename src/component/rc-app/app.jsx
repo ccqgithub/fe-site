@@ -8,12 +8,12 @@ import {
   Link
 } from 'react-router-dom';
 
-import { MainStore } from '../data/rc-stores/main';
-import { TodoStore } from '../data/rc-stores/todo';
+import { MainStore } from '../../data/rc-stores/main';
+import { TodoStore } from '../../data/rc-stores/todo';
 
 import Header from './com/header';
 import ComRoute from './util/com-route';
-import routes from '../rc-routes';
+import routes from '../../rc-routes';
 
 @observer
 class App extends React.Component {

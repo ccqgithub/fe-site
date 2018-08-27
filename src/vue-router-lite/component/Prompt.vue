@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { warning } from './utils';
+import { warning } from '../util/utils';
 import Empty from '../util/empty';
 
 const Prompt = {

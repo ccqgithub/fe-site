@@ -1,7 +1,7 @@
 import { warning } from './utils';
 
 /**
- * return this single child
+ * render the first existent child or empty
  */
 const Single = {
   functional: true,

@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import { warning } from './utils';
 import { createLocation, locationsAreEqual } from "history";
-import generatePath from "./generatePath";
+import { warning } from '../util/utils';
+import generatePath from "../util/generatePath";
 import Empty from '../util/empty';
 
 const Redirect = {

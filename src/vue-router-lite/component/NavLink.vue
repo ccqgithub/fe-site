@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { warning } from './utils';
+import { warning } from '../util/utils';
 import Route from './Route';
 import Link from './Link';
 

@@ -1,6 +1,9 @@
 import { warning } from './utils';
 import matchPath from "./matchPath";
 
+/**
+ * render the first matched Route
+ */
 const Switch = {
   props: {
     location: Object

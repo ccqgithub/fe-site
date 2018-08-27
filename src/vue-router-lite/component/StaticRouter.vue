@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { warning } from './utils';
+import { warning } from '../util/utils';
 import { createLocation, createPath } from "history";
 import Router from "./Router";
 

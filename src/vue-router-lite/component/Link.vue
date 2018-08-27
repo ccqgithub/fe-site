@@ -1,8 +1,10 @@
 <template>
   <single>
-    <tag :
-      tag="tag" 
-      :class="class" 
+    <slot :href="href" :history="router.history"></slot>
+    
+    <tag 
+      :tag="tag" 
+      :class="className" 
       :style="style" 
       :target="target" 
       :href="href"
@@ -11,13 +13,11 @@
     >
       <slot></slot>
     </tag>
-
-    <slot :href="href" :history="router.history"></slot>
   </single>
 </template>
 
 <script>
-import { warning } from './utils';
+import { warning } from '../util/utils';
 import { createLocation } from "history";
 import Tag from '../util/Tag';
 import Single from '../util/Single';
@@ -47,7 +47,7 @@ const Link = {
       type: String,
       default: 'a'
     },
-    class: {
+    className: {
       type: [String, Object, Array],
       default: () => {}
     },
@@ -73,7 +73,7 @@ const Link = {
   },
 
   methods: {
-    handleClick = event => {
+    handleClick(event) {
       this.$emit('click', event);
   
       event.preventDefault();

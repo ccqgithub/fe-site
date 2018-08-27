@@ -34,7 +34,7 @@
 <script>
 import NProgress from 'nprogress';
 import { of, observable, Subscription } from 'rxjs';
-import { todoFlows } from '../../data/flows/todo';
+import { todoFlows } from '../../../data/flows/todo';
 
 export default {
   name: 'page-list',

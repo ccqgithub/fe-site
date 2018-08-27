@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { gentx } from 'gentx';
 import NProgress from 'nprogress';
 import { of } from 'rxjs';
-import { userLoginFlow } from '../../data/flows/user';
+import { userLoginFlow } from '../../../data/flows/user';
 
 @inject('mainStore')
 @observer

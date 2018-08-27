@@ -7,16 +7,16 @@ export default [
   {
     name: 'list',
     path: '/list',
-    component: require('./rc-component/page/list').default,
+    component: require('./component/rc-app/page/list').default,
   },
   {
     name: 'login',
     path: '/login',
-    component: require('./rc-component/page/login').default,
+    component: require('./component/rc-app/page/login').default,
   },
   {
     name: 'user',
     path: '/user',
-    component: require('./rc-component/page/user').default,
+    component: require('./component/rc-app/page/user').default,
   },
 ];

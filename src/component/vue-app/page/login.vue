@@ -19,7 +19,7 @@
 <script>
 import NProgress from 'nprogress';
 import { of } from 'rxjs';
-import { userLoginFlow } from '../../data/flows/user';
+import { userLoginFlow } from '../../../data/flows/user';
 
 export default {
   name: 'page-login',

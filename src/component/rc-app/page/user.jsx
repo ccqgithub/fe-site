@@ -4,7 +4,7 @@ import { computed } from 'mobx';
 import { gentx } from 'gentx';
 import NProgress from 'nprogress';
 import { of } from 'rxjs';
-import { todoFlows } from '../../data/flows/todo';
+import { todoFlows } from '../../../data/flows/todo';
 
 @inject('mainStore')
 @observer

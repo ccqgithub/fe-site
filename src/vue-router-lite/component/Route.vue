@@ -6,13 +6,12 @@
 </template>
 
 <script>
-import { warning } from './utils';
-import matchPath from "./matchPath";
+import { warning } from '../util/utils';
+import matchPath from "../util/matchPath";
 import Single from '../util/Single';
 
 const Route = {
   props: {
-    computedMatch: Object, // private, from <Switch>
     path: String,
     exact: Boolean,
     strict: Boolean,
@@ -37,8 +36,7 @@ const Route = {
 
   computed: {
     match() {
-      let { computedMatch, location, path, strict, exact, sensitive, router } = this;
-      if (computedMatch) return computedMatch; // <Switch> already computed the match for us
+      let { location, path, strict, exact, sensitive, router } = this;
   
       if (!router) {
         throw new Error(`You should not use <Route> or withRouter() outside a <Router>`);
@@ -51,11 +49,11 @@ const Route = {
     },
 
     childProps() {
-      let { computedMatch, location, match } = this;
+      let { location, match } = this;
       const { history, route, staticContext } = this.router;
-      const location = this.location || route.location;
+      const nLocation = this.location || route.location;
 
-      return { ...this.$attrs, match, location, history, staticContext };
+      return { ...this.$attrs, match, location: nLocation, history, staticContext };
     }
   }
 }

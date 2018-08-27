@@ -1,21 +1,30 @@
-import MemoryRouter from "./MemoryRouter";
-import Prompt from "./Prompt";
-import Redirect from "./Redirect";
-import Route from "./Route";
-import Router from "./Router";
-import StaticRouter from "./StaticRouter";
-import Switch from "./Switch";
-import generatePath from "./generatePath";
-import matchPath from "./matchPath";
-import withRouter from "./withRouter";
+import Router from "./component/Router";
+import MemoryRouter from "./component/MemoryRouter";
+import HashRouvter from "./component/HashRouter";
+import BrowserRouter from "./component/BrowserRouter";
+import StaticRouter from "./component/StaticRouter";
+import Route from "./component/Route";
+import Prompt from "./component/Prompt";
+import Redirect from "./component/Redirect";
+import Link from "./component/Link";
+import NavLink from "./component/NavLink";
+import Switch from "./util/Switch";
+import generatePath from "./util/generatePath";
+import matchPath from "./util/matchPath";
+import withRouter from "./util/withRouter";
+let withRouter = 1;
 
 export {
+  Router,
   MemoryRouter,
+  HashRouvter,
+  BrowserRouter,
+  StaticRouter,
   Prompt,
   Redirect,
   Route,
-  Router,
-  StaticRouter,
+  Link,
+  NavLink,
   Switch,
   generatePath,
   matchPath,

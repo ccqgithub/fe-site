@@ -7,16 +7,16 @@ export default [
   {
     name: 'list',
     path: '/list',
-    component: require('./vue-component/page/list').default,
+    component: require('./component/vue-app/page/list').default,
   },
   {
     name: 'login',
     path: '/login',
-    component: require('./vue-component/page/login').default,
+    component: require('./component/vue-app/page/login').default,
   },
   {
     name: 'user',
     path: '/user',
-    component: require('./vue-component/page/user').default,
+    component: require('./component/vue-app/page/user').default,
   },
 ];

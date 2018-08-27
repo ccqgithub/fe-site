@@ -5,7 +5,7 @@ import { AppContainer } from 'react-hot-loader';
 import '@fortawesome/fontawesome-free';
 import 'nprogress/nprogress.css';
 import '../less/rc-app.less';
-import App from '../rc-component/app';
+import App from '../component/rc-app/app';
 
 // configure react
 configure({
@@ -26,8 +26,8 @@ render(App);
 // Webpack Hot Module Replacement API
 if (process.env.NODE_ENV === 'development') {
   if (module.hot) {
-    module.hot.accept('../rc-component/app', () => {
-      render(require('../rc-component/app').default);
+    module.hot.accept('../component/rc-app/app', () => {
+      render(require('../component/rc-app/app').default);
     });
   }
 }

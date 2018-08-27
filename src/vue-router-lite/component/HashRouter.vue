@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { warning } from './utils';
-import Router from './Router';
 import { createHashHistory as createHistory } from "history";
+import { warning } from '../util/utils';
+import Router from './Router';
 
 const HashRouter = {
   components: {
@@ -15,16 +15,10 @@ const HashRouter = {
   },
 
   props: {
-    // just use to check if user pass history
-    history: {
-      validator: function (value) {
-        return true;
-      }
-    },
-
+    history: Object,
     basename: String,
     hashType: {
-      validator: function (value) {
+      validator: function(value) {
         return ["hashbang", "noslash", "slash"].indexOf(value) !== -1
       }
     },
@@ -32,23 +26,17 @@ const HashRouter = {
   },
 
   data() {
-    let history = createHistory({
-      basename: this.basename,
-      hashType: this.hashType,
-      getUserConfirmation: this.getUserConfirmation
-    });
+    let history = this.history;
+    if (!history) {
+      history = createHistory({
+        basename: this.basename,
+        hashType: this.hashType,
+        getUserConfirmation: this.getUserConfirmation
+      });
+    }
 
     return {
       childHistory: history
-    }
-  },
-
-  beforeMount() {
-    if (this.history) {
-      warning(
-        '<HashRouter> ignores the history prop. To use a custom history, ' +
-        'use `import { Router }` instead of `import { HashRouter as Router }`.'
-      )
     }
   }
 }

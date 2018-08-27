@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import { VueGentX } from 'gentx';
 import wx from "../lib/jweixin-1.3.2";
 import { mainStore } from '../data/vue-stores/main';
-import App from '../vue-component/app';
+import App from '../component/vue-app/app';
 
 import '../less/vue-app.less';
 import '../lib/vue-filters';

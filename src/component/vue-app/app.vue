@@ -19,11 +19,11 @@
 <script>
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import VueRouter from 'vue-router';
-import routes from '../vue-routes';
-import { getBaseUrl } from '../lib/site';
-import { __ } from '../lib/i18n';
+import routes from '../../vue-routes';
+import { getBaseUrl } from '../../lib/site';
+import { __ } from '../../lib/i18n';
 import XHeader from './com/header';
-import { mainStore } from '../data/vue-stores/main';
+import { mainStore } from '../../data/vue-stores/main';
 
 // router
 const baseUrl = location.pathname.replace(/^(.*?\/vue\/).*$/, '$1');

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { warning } from './utils';
-import Router from './Router';
 import { createBrowserHistory as createHistory } from "history";
+import { warning } from '../util/utils';
+import Router from './Router';
 
 const BrowserRouter = {
   components: {
@@ -15,13 +15,7 @@ const BrowserRouter = {
   },
 
   props: {
-    // just use to check if user pass history
-    history: {
-      validator: function (value) {
-        return true;
-      }
-    },
-
+    history: Object,
     basename: String,
     forceRefresh: Boolean,
     keyLength: Number,
@@ -29,24 +23,18 @@ const BrowserRouter = {
   },
 
   data() {
-    let history = createHistory({
-      basename: this.basename,
-      forceRefresh: this.forceRefresh,
-      getUserConfirmation: this.getUserConfirmation,
-      keyLength: this.keyLength
-    });
+    let history = this.history;
+    if (!history) {
+      history = createHistory({
+        basename: this.basename,
+        forceRefresh: this.forceRefresh,
+        getUserConfirmation: this.getUserConfirmation,
+        keyLength: this.keyLength
+      });
+    }
 
     return {
       childHistory: history
-    }
-  },
-
-  beforeMount() {
-    if (this.history) {
-      warning(
-        '<MemoryRouter> ignores the history prop. To use a custom history, ' +
-        'use `import { Router }` instead of `import { BrowserRouter as Router }`.'
-      )
     }
   }
 }
