@@ -1,4 +1,4 @@
-import Router from './component/Router';
+import Router from './component/Router.vue';
 import MemoryRouter from './component/MemoryRouter';
 import HashRouvter from './component/HashRouter';
 import BrowserRouter from './component/BrowserRouter';
@@ -28,4 +28,4 @@ export {
   generatePath,
   matchPath,
   withRouter,
-}
+};

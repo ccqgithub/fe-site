@@ -1,0 +1,18 @@
+{
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".vue"
+        ]
+      }
+    }
+  },
+  "extends": [
+    "airbnb",
+    "plugin:vue/essential"
+  ],
+  "rules": {}
+}
