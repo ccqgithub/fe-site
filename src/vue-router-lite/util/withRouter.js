@@ -13,3 +13,5 @@ const withRouter = Component => {
     }
   }
 }
+
+export default withRouter;

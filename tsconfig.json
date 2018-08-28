@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "allowJs": true
+    "allowJs": true,
+    "checkJs": true
   },
   "include": [
     "src/**/*"

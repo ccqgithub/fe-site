@@ -1,5 +1,3 @@
 {
-  "jsRules": {
-    "no-duplicate-variable": [true, "check-parameters"]
-  }
+  "extends": "tslint-config-gent" 
 }
