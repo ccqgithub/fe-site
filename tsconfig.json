@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    // "allowJs": true,
+    // "checkJs": true
   },
   "include": [
     "types/**/*",
-    "src/**/*"
+    "src/**/*.js",
+    "src/**/*.jsx",
   ],
   "exclude": [
     "node_modules",

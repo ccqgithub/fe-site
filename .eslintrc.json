@@ -10,9 +10,16 @@
       }
     }
   },
+  "plugins": [
+    "prettier"
+  ],
   "extends": [
     "airbnb",
-    "plugin:vue/essential"
+    "prettier",
+    "prettier/react",
+    "prettier/standard"
   ],
-  "rules": {}
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }

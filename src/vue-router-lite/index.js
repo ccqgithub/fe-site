@@ -1,4 +1,4 @@
-import Router from './component/Router.vue';
+import Router from './component/Router';
 import MemoryRouter from './component/MemoryRouter';
 import HashRouvter from './component/HashRouter';
 import BrowserRouter from './component/BrowserRouter';
@@ -26,6 +26,5 @@ export {
   NavLink,
   Switch,
   generatePath,
-  matchPath,
-  withRouter,
-};
+  matchPath,withRouter,
+}

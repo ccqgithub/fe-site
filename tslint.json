@@ -1,3 +1,10 @@
 {
-  "extends": "tslint-config-airbnb" 
+  "linterOptions": {
+    "exclude": "**/*.vue"
+  },
+  "exclude": "**/*.vue",
+  "extends": "tslint-config-gent",
+  "rules": {
+    "import-name": false
+  }
 }
