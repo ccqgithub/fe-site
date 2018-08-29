@@ -26,5 +26,6 @@ export {
   NavLink,
   Switch,
   generatePath,
-  matchPath,withRouter,
-}
+  matchPath,
+  withRouter,
+};

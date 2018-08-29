@@ -14,11 +14,15 @@
     "prettier"
   ],
   "extends": [
-    "airbnb",
+    // "airbnb",
     "prettier",
     "prettier/react",
     "prettier/standard"
   ],
+  "env": {
+    "es6": true,
+    "node": true
+  },
   "rules": {
     "prettier/prettier": "error"
   }
