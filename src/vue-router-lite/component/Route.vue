@@ -7,7 +7,7 @@
 
 <script>
 import { warning } from '../util/utils';
-import matchPath from "../util/matchPath";
+import matchPath from '../util/matchPath';
 import Single from '../util/Single';
 
 const Route = {
@@ -17,35 +17,41 @@ const Route = {
     strict: Boolean,
     sensitive: Boolean,
     location: Object,
-    component: Object
+    component: Object,
   },
 
   inject: ['router'],
 
-  provide () {
+  provide() {
     return {
       router: {
         history: this.router.history,
         route: {
           location: this.location || this.router.route.location,
-          match: this.match
-        }
-      }
+          match: this.match,
+        },
+      },
     };
   },
 
   computed: {
     match() {
       let { location, path, strict, exact, sensitive, router } = this;
-  
+
       if (!router) {
-        throw new Error(`You should not use <Route> or withRouter() outside a <Router>`);
+        throw new Error(
+          `You should not use <Route> or withRouter() outside a <Router>`,
+        );
       }
-  
+
       const { route } = router;
       const pathname = (location || route.location).pathname;
-  
-      return matchPath(pathname, { path, strict, exact, sensitive }, route.match);
+
+      return matchPath(
+        pathname,
+        { path, strict, exact, sensitive },
+        route.match,
+      );
     },
 
     childProps() {
@@ -53,10 +59,16 @@ const Route = {
       const { history, route, staticContext } = this.router;
       const nLocation = this.location || route.location;
 
-      return { ...this.$attrs, match, location: nLocation, history, staticContext };
-    }
-  }
-}
+      return {
+        ...this.$attrs,
+        match,
+        location: nLocation,
+        history,
+        staticContext,
+      };
+    },
+  },
+};
 
 export default Route;
 </script>

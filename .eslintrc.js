@@ -1,4 +1,11 @@
-{
+module.exports = {
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "settings": {
     "import/resolver": {
       "node": {
@@ -14,16 +21,21 @@
     "prettier"
   ],
   "extends": [
-    // "airbnb",
+    "plugin:vue/essential",
+    "airbnb",
     "prettier",
     "prettier/react",
     "prettier/standard"
   ],
   "env": {
+    "browser": true,
     "es6": true,
     "node": true
   },
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "prefer-const": "off",
+    "prefer-destructuring": "off"
   }
 }

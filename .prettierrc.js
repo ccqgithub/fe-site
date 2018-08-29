@@ -1,4 +1,4 @@
-{
+module.exports = {
   // 每行最大字符数
   "printWidth": 80,
   // tab空格数
