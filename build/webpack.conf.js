@@ -134,6 +134,9 @@ Object.keys(entries).forEach(key => {
 // exports
 const configExports = {};
 
+// devtool;
+configExports.devtool = 'source-map';
+
 // config exports
 configExports.mode = isProduction ? 'production' : 'development';
 configExports.context = contextPath;
