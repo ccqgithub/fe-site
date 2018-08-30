@@ -145,7 +145,7 @@ export default class App extends Vue {
     left: 0;
     top: 0;
     right: 0;
-    height: 50px;
+    height: 50px
   }
 
   .app-pages {

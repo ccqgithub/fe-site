@@ -1,10 +1,20 @@
 module.exports = {
-  "extends": [
-    "stylelint-config-recommended",
-    "stylelint-config-prettier"
+  "processors": [
+    ["@mapbox/stylelint-processor-arbitrary-tags", {
+      fileFilterRegex: [/\.vue$/],
+      endTag: '</\\s*?style>'
+    }]
   ],
-  "rules": {
-
+  plugins: ['stylelint-prettier'],
+  extends: [
+    'stylelint-config-recommended', 
+    'stylelint-prettier/recommended'
+  ],
+  rules: {
+    'prettier/prettier': [true, {
+      semi: true
+    }],
+    'no-empty-source': null
   },
-  "defaultSeverity": "warning"
-}
+  defaultSeverity: 'warning',
+};
