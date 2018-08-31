@@ -19,10 +19,10 @@
 <script>
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import VueRouter from 'vue-router';
-import routes from '../../vue-routes';
+import routes from '../../vue-routes'
 import { getBaseUrl } from '../../lib/site';
 import { __ } from '../../lib/i18n';
-import XHeader from './com/header';
+import XHeader from './com/header.vue';
 import { mainStore } from '../../data/vue-stores/main';
 
 // router
@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
     next('/login');
     return;
   }
-  next(true);
+  next();
 });
 
 const routeQueue = [];

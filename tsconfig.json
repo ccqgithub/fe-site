@@ -3,15 +3,16 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     // "allowJs": true,
-    // "checkJs": true
+    // "checkJs": true,
+    "jsx": "react"
   },
   "include": [
     "types/**/*",
-    "src/**/*.js",
-    "src/**/*.jsx",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
-  ]
+  ],
+  "jsx": true
 }

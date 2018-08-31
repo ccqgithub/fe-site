@@ -45,7 +45,9 @@ module.exports = {
     "eqeqeq": "off",
     "no-console": "off",
     "global-require": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-script-url": "off"
   },
   "overrides": [
     {

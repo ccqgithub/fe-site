@@ -1,18 +1,12 @@
 import { gentx } from 'gentx';
 import { observer, inject } from 'mobx-react';
 import React from 'react';
-import {
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 @gentx
 @inject('mainStore')
 @observer
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   logout() {
     this.props.mainStore.setLoginUser(null);
   }
@@ -22,41 +16,33 @@ class Header extends React.Component {
 
     return (
       <ul className="header">
-        {
-          user ? null : 
+        {user ? null : (
           <li>
-            <Link to="/login">login</Link>   
+            <Link to="/login">login</Link>
           </li>
-        }
-        {
-          !user ? null : 
+        )}
+        {!user ? null : (
           <li>
-            <Link to="/list">list</Link>   
+            <Link to="/list">list</Link>
           </li>
-        }
-        {
-          !user ? null : 
+        )}
+        {!user ? null : (
           <li>
-            <Link to="/user">
-              user: { user.username }
-            </Link>
+            <Link to="/user">user: {user.username}</Link>
           </li>
-        }
-        {
-          !user ? null : 
+        )}
+        {!user ? null : (
           <li>
-            <a href="javascript:;" onClick={ () => this.logout() }>
+            <a href="javascript:;" onClick={() => this.logout()}>
               Logout
             </a>
           </li>
-        }
+        )}
       </ul>
-    )
+    );
   }
 }
 
-Header.propTypes = {
-  
-}
+Header.propTypes = {};
 
 export default Header;

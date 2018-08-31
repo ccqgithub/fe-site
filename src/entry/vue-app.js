@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import { VueGentX } from 'gentx';
 import { mainStore } from '../data/vue-stores/main';
-import App from '../component/vue-app/app';
+import App from '../component/vue-app/app.vue';
 
 import '../less/vue-app.less';
 import '../lib/vue-filters';

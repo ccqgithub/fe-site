@@ -1,6 +1,6 @@
 import '../lib/polyfill';
 import Vue from 'vue';
-import App from '../component/vue-router-h5/index';
+import App from '../component/vue-router-h5/index.vue';
 
 import '../less/rc-router-h5.less';
 
