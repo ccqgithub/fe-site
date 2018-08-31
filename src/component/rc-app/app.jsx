@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Link
+  Link,
 } from 'react-router-dom';
 
 import { MainStore } from '../../data/rc-stores/main';
@@ -23,69 +23,62 @@ class App extends React.Component {
     // stores
     this.stores = {
       mainStore: new MainStore(),
-      todoStore: new TodoStore()
-    }
+      todoStore: new TodoStore(),
+    };
   }
 
   render() {
     let mainStore = this.stores.mainStore;
 
-    let routList = routes.map(item => {
+    let routList = routes.map((item) => {
       if (!mainStore.loginUser && item.name != 'login') {
         return (
-          <Route 
-            exact 
+          <Route
+            exact
             key={item.name}
-            path={item.path} 
-            render={() => (
-              <Redirect to='/login'/>
-            )}
+            path={item.path}
+            render={() => <Redirect to="/login" />}
           />
         );
       }
 
       if (item.redirect) {
         return (
-          <Route 
-            exact 
+          <Route
+            exact
             key={item.name}
-            path={item.path} 
-            render={() => (
-              <Redirect to={item.redirect}/>
-            )}
+            path={item.path}
+            render={() => <Redirect to={item.redirect} />}
           />
         );
       }
 
       return (
-        <ComRoute 
-          exact 
+        <ComRoute
+          exact
           key={item.name}
-          path={item.path} 
+          path={item.path}
           component={item.component}
         />
       );
     });
 
-    const baseUrl = location.pathname.replace(/^(.*?\/react\/).*$/, '$1');
+    const baseUrl = window.location.pathname.replace(
+      /^(.*?\/react\/).*$/,
+      '$1',
+    );
 
     return (
       <Provider {...this.stores}>
-        <Router
-          basename={baseUrl}
-        >
+        <Router basename={baseUrl}>
           <div className="app-main">
-            
             <div className="app-header">
-              <Header></Header>
+              <Header />
             </div>
 
-            <div className="app-pages">
-              {routList}
-            </div>
+            <div className="app-pages">{routList}</div>
 
             {/* { process.env.NODE_ENV === 'development' ? <DevTools /> : null } */}
-          
           </div>
         </Router>
       </Provider>

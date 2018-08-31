@@ -1,6 +1,9 @@
 module.exports = {
   "parserOptions": {
-    "ecmaVersion": 2019,
+    // move it into parserOptions, for eslint-plugin-vue
+    // https://github.com/vuejs/eslint-plugin-vue#couple-faq
+    "parser": "babel-eslint",
+    "ecmaVersion": 2018,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -18,10 +21,11 @@ module.exports = {
     }
   },
   "plugins": [
+    "babel",
     "prettier"
   ],
   "extends": [
-    "plugin:vue/essential",
+    "plugin:vue/recommended",
     "airbnb",
     "prettier",
     "prettier/react",
@@ -30,7 +34,6 @@ module.exports = {
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
   },
   "rules": {
     "prettier/prettier": "warn",
@@ -42,5 +45,24 @@ module.exports = {
     "no-console": "off",
     "global-require": "off",
     "consistent-return": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["build/**/*", "config/**/*", "script/**/*"],
+      "parserOptions": {
+        // move it into parserOptions, for eslint-plugin-vue
+        // https://github.com/vuejs/eslint-plugin-vue#couple-faq
+        "parser": "espree",
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "env": {
+        "browser": false,
+        "node": true
+      }
+    }
+  ]
 }
