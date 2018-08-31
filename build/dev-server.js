@@ -3,7 +3,7 @@
  */
 const path = require('path');
 const rm = require('rimraf');
-const koa = require('koa');
+const Koa = require('koa');
 const staticServe = require('koa-static');
 const rewrite = require('koa-rewrite');
 const proxy = require('koa-proxy');
@@ -15,6 +15,7 @@ const hotMiddleware = require('koa-webpack-hot');
 const webpackConfig = require('./webpack.conf');
 const publicConf = require('../config/public.conf');
 const prjConf = require('../config/project.conf');
+
 const devServerConf = prjConf.devServer;
 const i18nConf = prjConf.i18n;
 
@@ -22,64 +23,70 @@ const i18nConf = prjConf.i18n;
 function clearDist(callback) {
   if (!publicConf.clear) return callback();
 
-  rm(path.join(publicConf.distPath), err => {
+  rm(path.join(publicConf.distPath), (err) => {
     if (err) throw err;
     callback();
   });
 }
 
 // new app
-const app = new koa();
-//如果为 true，则解析 "Host" 的 header 域，并支持 X-Forwarded-Host
+const app = new Koa();
+// 如果为 true，则解析 "Host" 的 header 域，并支持 X-Forwarded-Host
 app.proxy = true;
-//默认为2，表示 .subdomains 所忽略的字符偏移量。
+// 默认为2，表示 .subdomains 所忽略的字符偏移量。
 app.subdomainOffset = 2;
 
 /* == WEBPACK == */
 const compiler = webpack(webpackConfig);
 clearDist(() => {
-  const watching = compiler.watch({
-    //config
-  }, (err, stats) => {
-    if (err) {
-      console.error(err.stack || err);
-      if (err.details) {
-        console.error(err.details);
+  compiler.watch(
+    {
+      // config
+    },
+    (err, stats) => {
+      if (err) {
+        console.error(err.stack || err);
+        if (err.details) {
+          console.error(err.details);
+        }
+        return;
       }
-      return;
-    }
 
-    const info = stats.toJson();
+      const info = stats.toJson();
 
-    if (stats.hasErrors()) {
-      console.error(info.errors);
-    }
+      if (stats.hasErrors()) {
+        console.error(info.errors);
+      }
 
-    if (stats.hasWarnings()) {
-      console.warn(info.warnings);
-    }
-  });
+      if (stats.hasWarnings()) {
+        console.warn(info.warnings);
+      }
+    },
+  );
 });
 
 // hot reload socket
 app.use(rewrite(/^\/.+\/__webpack_hmr/, '/__webpack_hmr'));
-app.use(hotMiddleware(compiler, {
-  log: console.log,
-  path: '/__webpack_hmr',
-  // heartbeat: 10 * 1000
-}));
-
+app.use(
+  hotMiddleware(compiler, {
+    log: console.log,
+    path: '/__webpack_hmr',
+    // heartbeat: 10 * 1000
+  }),
+);
 
 /* == PROXY == */
 // cors
 const proxyCors = devServerConf.proxyCors || {};
-app.use(cors({
-  allowHeaders: proxyCors.allowHeaders || [],
-  exposeHeaders: proxyCors.exposeHeaders || []
-}));
+app.use(
+  cors({
+    allowHeaders: proxyCors.allowHeaders || [],
+    exposeHeaders: proxyCors.exposeHeaders || [],
+  }),
+);
 // proxies
 const proxies = devServerConf.proxies;
-proxies.forEach(item => {
+proxies.forEach((item) => {
   app.use(proxy(item));
 });
 
@@ -94,7 +101,7 @@ if (i18nConf.on) {
 }
 // rewrites
 let rewrites = devServerConf.rewrites;
-rewrites.forEach(item => {
+rewrites.forEach((item) => {
   app.use(rewrite(item[0], item[1]));
 });
 
@@ -109,8 +116,8 @@ if (publicConf.publicPath != '/') {
 app.use(staticServe(publicConf.distPath));
 
 /* == NOT FOUND  == */
-app.use(async (ctx, next) => {
-  console.log('404', ctx.path)
+app.use(async (ctx) => {
+  console.log('404', ctx.path);
   ctx.throw('Not Found!', 404);
 });
 

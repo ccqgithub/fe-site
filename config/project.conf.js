@@ -3,7 +3,6 @@
  */
 
 module.exports = {
-
   // dev server 配置: 不能删
   // build/dev-server.js
   devServer: {
@@ -13,21 +12,21 @@ module.exports = {
     // https://github.com/koajs/cors
     proxyCors: {
       allowHeaders: ['TOKEN', 'Locale', 'content-type'],
-      exposeHeaders: ['TOKEN']
+      exposeHeaders: ['TOKEN'],
     },
     // https://github.com/popomore/koa-proxy
     proxies: [
       {
-        host:  'http://www.xxx.cn',
-        match: /^\/xxx\//       
-      }
+        host: 'http://www.xxx.cn',
+        match: /^\/xxx\//,
+      },
     ],
     // url 重写
     // https://github.com/koajs/rewrite
     rewrites: [
       [/^\/vue(\/.*|$)/, '/vue-app.html'],
-      [/^\/react(\/.*|$)/, '/rc-app.html']
-    ]
+      [/^\/react(\/.*|$)/, '/rc-app.html'],
+    ],
   },
 
   // 国际化配置
@@ -38,19 +37,19 @@ module.exports = {
     languages: ['zh-CN', 'en-US'],
     // 映射语言
     map: {
-      'zh': 'zh-CN',
-      'en': 'en-US'
+      zh: 'zh-CN',
+      en: 'en-US',
     },
     // 检查语言的顺序
     detects: [
       // /zh-CN/xxx
-      'path', 
+      'path',
       // /xxx?lang=zh-CN
-      'query', 
+      'query',
       // localStorage.getItem('lang')
-      'store', 
+      'store',
       // navigator.language: zh-CN
-      'browser'
+      'browser',
     ],
     // 默认语言
     default: 'zh-CN',
@@ -59,7 +58,7 @@ module.exports = {
     service: {
       server: 'http://i18n.server.com/',
       site: 'test',
-      locales: ['zh-CN', 'en-US']
-    }
-  }
+      locales: ['zh-CN', 'en-US'],
+    },
+  },
 };

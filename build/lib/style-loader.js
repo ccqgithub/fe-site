@@ -1,4 +1,4 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /**
  * 获取一种css文件的 loader 列表
@@ -44,90 +44,108 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     less / sass / stylues loader
   ]
  */
-exports.getStyleLoader = function(loader, config) {
+exports.getStyleLoader = function getStyleLoader(loader, conf) {
   // config
-  config = Object.assign({
-    // sourceMap
-    sourceMap: true,
-    // compress
-    compress: true,
-    // 提取css
-    extractCss: false,
-    // style-loader options
-    styleOptions: null,
-    // css-loader options
-    cssOptions: null,
-    // less-loader options
-    lessOptions: null,
-    // sass-loader options
-    sassOptions: null,
-    // stylus-loader options
-    stylusOptions: null,
-    // postcss-loader options
-    postcssOptions: null
-  }, config);
+  const config = Object.assign(
+    {
+      // sourceMap
+      sourceMap: true,
+      // compress
+      compress: true,
+      // 提取css
+      extractCss: false,
+      // style-loader options
+      styleOptions: null,
+      // css-loader options
+      cssOptions: null,
+      // less-loader options
+      lessOptions: null,
+      // sass-loader options
+      sassOptions: null,
+      // stylus-loader options
+      stylusOptions: null,
+      // postcss-loader options
+      postcssOptions: null,
+    },
+    conf,
+  );
 
   // style-loader
   let styleLoader = {
     loader: 'style-loader',
-    options: Object.assign({
-      sourceMap: config.sourceMap
-    }, config.styleOptions) 
+    options: Object.assign(
+      {
+        sourceMap: config.sourceMap,
+      },
+      config.styleOptions,
+    ),
   };
 
   // use vue-style-loader replace with style-loader
   if (config.vueStyleOptions) {
     styleLoader = {
       loader: 'vue-style-loader',
-      options: Object.assign({
-        sourceMap: config.sourceMap
-      }, config.vueStyleOptions) 
-    }
+      options: Object.assign(
+        {
+          sourceMap: config.sourceMap,
+        },
+        config.vueStyleOptions,
+      ),
+    };
   }
 
   // css loader
   let cssLoader = {
     loader: 'css-loader',
-    options: Object.assign({
-      importLoaders: 0,
-      minimize: config.compress,
-      sourceMap: config.sourceMap
-    }, config.cssOptions)
+    options: Object.assign(
+      {
+        importLoaders: 0,
+        minimize: config.compress,
+        sourceMap: config.sourceMap,
+      },
+      config.cssOptions,
+    ),
   };
 
   // loaders
   let loaders = [
     config.extractCss ? MiniCssExtractPlugin.loader : styleLoader,
-    cssLoader
+    cssLoader,
   ];
-  
+
   // postcss file
   if (config.postcssOptions || loader == 'postcss') {
     loaders.push({
       loader: 'postcss-loader',
-      options: Object.assign({
-        sourceMap: config.sourceMap
-      }, config.postcssOptions)
+      options: Object.assign(
+        {
+          sourceMap: config.sourceMap,
+        },
+        config.postcssOptions,
+      ),
     });
   }
 
   // preprocess loader exclude postcss
   if (loader != 'postcss' && loader != 'css') {
     loaders.push({
-      loader: loader + '-loader',
-      options: Object.assign({
-        sourceMap: config.sourceMap
-      }, config[loader + 'Options'])
-    })
+      loader: `${loader}-loader`,
+      options: Object.assign(
+        {
+          sourceMap: config.sourceMap,
+        },
+        config[`${loader}Options`],
+      ),
+    });
   }
 
-  return {loaders}
-}
+  return { loaders };
+};
 
 /**
  * 获取各种css语言的 loader
  */
-exports.getStyleLoaders = function(config) {
+exports.getStyleLoaders = function getStyleLoaders(config) {
   let cssLoader = exports.getStyleLoader('css', config);
   let sassLoader = exports.getStyleLoader('sass', config);
   let lessLoader = exports.getStyleLoader('less', config);
@@ -140,7 +158,7 @@ exports.getStyleLoaders = function(config) {
       sass: sassLoader.loaders,
       less: lessLoader.loaders,
       stylus: stylusLoader.loaders,
-      postcss: postcssLoader.loaders
-    }
-  }
-}
+      postcss: postcssLoader.loaders,
+    },
+  };
+};

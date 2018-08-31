@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PlaceAssetsPlugin = require('html-webpack-place-assets-plugin');
@@ -28,14 +28,14 @@ const styleLoaders = getStyleLoaders({
   extractCss: isProduction,
   // use vue-style-loader
   vueStyleOptions: {},
-  postcssOptions: { 
+  postcssOptions: {
     config: {
-      path: path.resolve(__dirname, './postcss.config.js')
-    }
+      path: path.resolve(__dirname, './postcss.config.js'),
+    },
   },
   lessOptions: {
-    strictMath: 'off'
-  }
+    strictMath: 'off',
+  },
 });
 
 // ====================================================================
@@ -44,30 +44,29 @@ const styleLoaders = getStyleLoaders({
 const cacheLoaderOptions = {
   loader: 'cache-loader',
   options: {
-    cacheDirectory: path.resolve(__dirname, '../.cache-loader')
-  }
-}
+    cacheDirectory: path.resolve(__dirname, '../.cache-loader'),
+  },
+};
 
 // ====================================================================
 // babel loader options
 // ====================================================================
 const babelLoaderOptions = {
-  loader: 'babel-loader'
-}
-
+  loader: 'babel-loader',
+};
 
 // ====================================================================
-// string replace loader options: 
-// definePlugin not useable in html, 
+// string replace loader options:
+// definePlugin not useable in html,
 // so use string replace instead, strtof 'REPLACE_' defines
 // ====================================================================
 const stringReplaceLoaderOptions = [];
-Object.keys(defines).forEach(key => {
+Object.keys(defines).forEach((key) => {
   if (key.indexOf('REPLACE_') != 0) return;
   stringReplaceLoaderOptions.push({
     search: `\\$\\{${key}\\}`,
     replace: defines[key],
-    flags: 'g'
+    flags: 'g',
   });
 });
 
@@ -76,15 +75,13 @@ Object.keys(defines).forEach(key => {
 // ====================================================================
 const entryConfigs = findEntry({
   // contextDir
-  contextPath: contextPath,
+  contextPath,
   // entryDir
-  entryDirs: [
-    path.resolve(contextPath, 'entry/')
-  ],
+  entryDirs: [path.resolve(contextPath, 'entry/')],
   // template for entry js
   template(p) {
     return p.replace(/.*entry\/(.*)\.(js|jsx)$/, 'html/$1.html');
-  }
+  },
 });
 
 const entries = entryConfigs.entries;
@@ -92,14 +89,16 @@ const templates = entryConfigs.templates;
 const entryObj = {};
 // hot reload entry
 const hotReloadEntry = [
-  `webpack-hot-middleware/client?reload=false&path=${publicConf.publicPath}__webpack_hmr`
+  `webpack-hot-middleware/client?reload=false&path=${
+    publicConf.publicPath
+  }__webpack_hmr`,
 ];
 
 Object.keys(entries).forEach((key) => {
   let item = entries[key];
-  entryObj[item] = isProduction ?
-    './' + item :
-    hotReloadEntry.concat('./' + item);
+  entryObj[item] = isProduction
+    ? `./${item}`
+    : hotReloadEntry.concat(`./${item}`);
 });
 
 // ====================================================================
@@ -111,21 +110,20 @@ Object.keys(entries).forEach((key) => {
 // ====================================================================
 const htmlPlugins = [];
 // html files
-Object.keys(entries).forEach(key => {
+Object.keys(entries).forEach((key) => {
   let item = entries[key];
-  let template = './' + templates[item];
+  let template = `./${templates[item]}`;
   let filename = template.replace(/.*html\/(.*)\.html$/, '$1.html');
 
   htmlPlugins.push(
     new HtmlWebpackPlugin({
-      template: template,
-      filename: filename,
+      template,
+      filename,
       entry: item,
-      inject: false
-    })
+      inject: false,
+    }),
   );
 });
-
 
 // ====================================================================
 // exports configuration
@@ -149,14 +147,11 @@ configExports.output = {
 
 // resolve
 configExports.resolve = {
-  modules: [
-    'node_modules',
-    path.resolve(contextPath, '../node_modules')
-  ],
+  modules: ['node_modules', path.resolve(contextPath, '../node_modules')],
   extensions: ['.js', '.jsx', '.vue', '.json', '.less', '.scss'],
   alias: {
     //
-  }
+  },
 };
 
 // module
@@ -174,74 +169,68 @@ configExports.module = {
             collapseWhitespace: false,
             removeAttributeQuotes: false,
             interpolate: 'require',
-          }
+          },
         },
         {
           loader: 'string-replace-loader',
           options: {
-            multiple: stringReplaceLoaderOptions
-          }
-        }
-      ]
+            multiple: stringReplaceLoaderOptions,
+          },
+        },
+      ],
     },
     {
       test: /\.vue$/,
-      use: 'vue-loader'
+      use: 'vue-loader',
     },
     {
       test: /\.less$/,
-      use: styleLoaders.loaders.less
+      use: styleLoaders.loaders.less,
     },
     {
       test: /\.css$/,
-      use: styleLoaders.loaders.css
+      use: styleLoaders.loaders.css,
     },
     {
       test: /\.scss$/,
-      use: styleLoaders.loaders.sass
+      use: styleLoaders.loaders.sass,
     },
     {
       test: /\.js$/,
-      use: [
-        cacheLoaderOptions,
-        babelLoaderOptions
-      ]
+      use: [cacheLoaderOptions, babelLoaderOptions],
     },
     {
       test: /\.jsx$/,
-      use: [
-        cacheLoaderOptions,
-        babelLoaderOptions
-      ]
+      use: [cacheLoaderOptions, babelLoaderOptions],
     },
     {
       test: /\.babelrc$/,
-      use: 'json-loader'
+      use: 'json-loader',
     },
     {
       test: /\.(ico|png|jpe?g|gif|svg)(\?.*)?$/,
       loader: 'url-loader',
       options: {
         limit: 10000,
-        name: 'imgs/[path][name].[hash].[ext]'
-      }
+        name: 'imgs/[path][name].[hash].[ext]',
+      },
     },
     {
       test: /\.(mp3|mp4)(\?.*)?$/,
       loader: 'url-loader',
       options: {
-        name: 'medias/[path][name].[hash].[ext]'
-      }
+        name: 'medias/[path][name].[hash].[ext]',
+      },
     },
     {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
       loader: 'url-loader',
       options: {
         limit: 10000,
-        name: 'fonts/[path][name].[hash].[ext]'
-      }
-    }
-  ]
+        name: 'fonts/[path][name].[hash].[ext]',
+      },
+    },
+  ],
 };
 
 // optimization
@@ -249,12 +238,14 @@ const reVendorReact = /[\\/]node_modules[\\/](react|react-dom|react-router|react
 const reVendorVue = /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/;
 const reVendorRx = /[\\/]node_modules[\\/](rxjs)[\\/]/;
 const reVendorCore = /[\\/]node_modules[\\/](core-js|moment)[\\/]/;
-const reVendorOther = function(module) {
-  return /[\\/]node_modules[\\/]/.test(module.resource)
-    && !reVendorReact.test(module.resource)
-    && !reVendorVue.test(module.resource)
-    && !reVendorRx.test(module.resource)
-    && !reVendorCore.test(module.resource);
+const reVendorOther = function reVendorOther(module) {
+  return (
+    /[\\/]node_modules[\\/]/.test(module.resource) &&
+    !reVendorReact.test(module.resource) &&
+    !reVendorVue.test(module.resource) &&
+    !reVendorRx.test(module.resource) &&
+    !reVendorCore.test(module.resource)
+  );
 };
 configExports.optimization = {
   minimize: publicConf.compress,
@@ -266,15 +257,15 @@ configExports.optimization = {
       uglifyOptions: {
         output: {
           comments: false,
-          beautify: false
+          beautify: false,
         },
-      }
+      },
     }),
-    new OptimizeCSSAssetsPlugin({})
+    new OptimizeCSSAssetsPlugin({}),
   ],
   runtimeChunk: 'single',
   splitChunks: {
-    chunks: "all",
+    chunks: 'all',
     minSize: 100000,
     maxSize: 900000,
     minChunks: 1,
@@ -286,31 +277,31 @@ configExports.optimization = {
       vendors: {
         test: reVendorOther,
         priority: -10,
-        name: 'vendor'
+        name: 'vendor',
       },
       react: {
         test: reVendorReact,
         priority: 0,
-        name: 'vendor-rect'
+        name: 'vendor-rect',
       },
       vue: {
         test: reVendorVue,
         priority: 0,
-        name: 'vendor-vue'
+        name: 'vendor-vue',
       },
       rxjs: {
         test: reVendorRx,
         priority: 0,
-        name: 'vendor-rxjs'
+        name: 'vendor-rxjs',
       },
       core: {
         test: reVendorCore,
         priority: 0,
-        name: 'vendor-core'
-      }
-    }
-  }
-}
+        name: 'vendor-core',
+      },
+    },
+  },
+};
 
 // plugins
 configExports.plugins = [
@@ -325,30 +316,27 @@ configExports.plugins = [
     {
       from: path.resolve(contextPath, '../root'),
       to: path.resolve(publicConf.distPath),
-      ignore: ['.*']
-    }
+      ignore: ['.*'],
+    },
   ]),
 
   // extract css
   new MiniCssExtractPlugin({
     filename: !isProduction ? '[name].css' : '[name].[hash].css',
-    chunkFilename: !isProduction ? '[id].css' : '[id].[hash].css'
-  })
+    chunkFilename: !isProduction ? '[id].css' : '[id].[hash].css',
+  }),
 ]
-// html webpack plugin
-.concat(htmlPlugins)
-// inject assets in html at the replacement
-.concat([
-  new PlaceAssetsPlugin({
-    headReplaceExp: /<!-- html-webpack-plugin-css -->/,
-    bodyReplaceExp: /<!-- html-webpack-plugin-script -->/,
-    tagsJoin: '\n  ',
-  })
-])
-// hot reload
-.concat(
-  isProduction ? [] :
-  new webpack.HotModuleReplacementPlugin({})
-);
+  // html webpack plugin
+  .concat(htmlPlugins)
+  // inject assets in html at the replacement
+  .concat([
+    new PlaceAssetsPlugin({
+      headReplaceExp: /<!-- html-webpack-plugin-css -->/,
+      bodyReplaceExp: /<!-- html-webpack-plugin-script -->/,
+      tagsJoin: '\n  ',
+    }),
+  ])
+  // hot reload
+  .concat(isProduction ? [] : new webpack.HotModuleReplacementPlugin({}));
 
 module.exports = configExports;

@@ -2,7 +2,7 @@ export default [
   {
     name: 'index',
     path: '/',
-    redirect: '/list'
+    redirect: '/list',
   },
   {
     name: 'list',

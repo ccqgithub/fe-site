@@ -33,9 +33,14 @@ module.exports = {
     "node": true
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": "warn",
     "no-unused-vars": "warn",
     "prefer-const": "off",
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    "import/no-extraneous-dependencies": "off",
+    "eqeqeq": "off",
+    "no-console": "off",
+    "global-require": "off",
+    "consistent-return": "off"
   }
 }

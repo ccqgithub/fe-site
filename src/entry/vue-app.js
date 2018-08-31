@@ -21,14 +21,14 @@ Vue.use(VueRouter);
 
 // global wx
 window.wx = wx;
-wx.error(function(res) {
+wx.error((res) => {
   console.log(res);
 });
 
 const Com = Vue.extend(App);
 
 new Com({
-  store: mainStore
+  store: mainStore,
 }).$mount('#app');
 
 // mobile keyboard

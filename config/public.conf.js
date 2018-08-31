@@ -4,6 +4,7 @@
  */
 
 const path = require('path');
+
 const APP_ENV = process.env.APP_ENV || 'dev';
 
 /* === config start === */
@@ -17,21 +18,21 @@ const COMMON_CONF = {
   // 是否压缩
   compress: false,
   // 是否清理产出目录distPath
-  clear: false
-}
+  clear: false,
+};
 
 const ENV_CONF = {
   // dev
   dev: {
     clear: true,
-    compress: false
+    compress: false,
   },
   // prod
   prod: {
     clear: false,
-    compress: true
-  }
-}
+    compress: true,
+  },
+};
 /* === config end === */
 
 // module.exports
