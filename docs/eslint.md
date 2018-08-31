@@ -11,6 +11,7 @@
 - [Tslint](https://github.com/palantir/tslint): 扫描Typescript。
 - [Stylelint](https://github.com/stylelint/stylelint): 扫描css、less、scss、postcss等。
 - [Htmllint](https://github.com/htmllint/htmllint): 扫描html。
+- [MarkdownLint](https://github.com/markdownlint/markdownlint): 扫描markdown文件。
 - [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue): 扫描vue单文件组件（SFC）。
 
 ## 编辑器`格式化`配置
