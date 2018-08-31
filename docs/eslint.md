@@ -8,6 +8,10 @@
 - [Prettier](https://prettier.io/): 一个固执己见的代码格式化工具，支持多语言，支持多编辑器，大概有10个左右的配置项。
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)：最受社区欢迎的JavaScript代码风格指南。
 - [ESLint](https://eslint.org/)：ESLint 是一个开源的JavaScript代码扫描工具，可帮助您发现并纠正代码结构质量的问题。
+- [Tslint](https://github.com/palantir/tslint): 扫描Typescript。
+- [Stylelint](https://github.com/stylelint/stylelint): 扫描css、less、scss、postcss等。
+- [Htmllint](https://github.com/htmllint/htmllint): 扫描html。
+- [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue): 扫描vue单文件组件（SFC）。
 
 ## 编辑器`格式化`配置
 
