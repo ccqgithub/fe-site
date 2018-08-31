@@ -10,6 +10,7 @@ module.exports = {
     }
   },
   "settings": {
+    // https://github.com/benmosher/eslint-plugin-import#settings
     "import/resolver": {
       "node": {
         "extensions": [
