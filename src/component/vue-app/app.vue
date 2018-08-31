@@ -1,32 +1,32 @@
 <template>
-<div id="app" class="app">
-  
-  <div class="app-header">
-    <x-header></x-header>
-  </div>
+  <div id="app" class="app">
+    
+    <div class="app-header">
+      <x-header />
+    </div>
 
-  <div class="app-pages">
-    <transition :name="transitionName">
-      <keep-alive :include="includeReg">
-        <router-view :key="$route.path" ref="router"></router-view>
-      </keep-alive>
-    </transition>
-  </div>
+    <div class="app-pages">
+      <transition :name="transitionName">
+        <keep-alive :include="includeReg">
+          <router-view :key="$route.path" ref="router" />
+        </keep-alive>
+      </transition>
+    </div>
 
-</div>
+  </div>
 </template>
 
 <script>
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import VueRouter from 'vue-router';
-import routes from '../../vue-routes'
+import routes from '../../vue-routes';
 import { getBaseUrl } from '../../lib/site';
 import { __ } from '../../lib/i18n';
 import XHeader from './com/header.vue';
 import { mainStore } from '../../data/vue-stores/main';
 
 // router
-const baseUrl = location.pathname.replace(/^(.*?\/vue\/).*$/, '$1');
+const baseUrl = location.pathname.replace(/^(.*?\/vue\/).*$/, '$1')
 const router = new VueRouter({
   mode: 'history',
   base: baseUrl,
@@ -61,7 +61,7 @@ let historyLength = history.length;
     XHeader
   }
 })  
-export default class App extends Vue {
+class App extends Vue {
   
   data() {
     return {
@@ -136,6 +136,8 @@ export default class App extends Vue {
     this.historyLength = curHistoryLength;
   }
 }
+
+export default App;
 </script>
 
 <style lang="less">
