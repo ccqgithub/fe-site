@@ -119,3 +119,12 @@ react 项目推荐书籍管理模式：
   |
 
 ```
+
+## Todo
+
+- 完善eslint
+- 完善stylelint
+- tslint
+- htmllint
+- 精简目录
+- 接入Jest
