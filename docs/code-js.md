@@ -40,7 +40,7 @@
 3. 在项目安装需要的npm包
 
     ```sh
-    npm i -D eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react eslint-plugin-vue prettier 
+    npm i -D eslint eslint-config-airbnb eslint-config-prettier eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react eslint-plugin-vue eslint-plugin-babel prettier babel-eslint 
     ```
 4. 打开编辑器的配置，配置eslint验证语言，让他支持vue文件。
 
