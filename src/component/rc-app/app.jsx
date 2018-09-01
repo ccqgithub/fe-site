@@ -1,12 +1,7 @@
 import React from 'react';
-import DevTools from 'mobx-react-devtools';
+// import DevTools from 'mobx-react-devtools';
 import { observer, Provider } from 'mobx-react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Link,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 
 import { MainStore } from '../../data/rc-stores/main';
 import { TodoStore } from '../../data/rc-stores/todo';
@@ -31,7 +26,7 @@ class App extends React.Component {
     let mainStore = this.stores.mainStore;
 
     let routList = routes.map((item) => {
-      if (!mainStore.loginUser && item.name != 'login') {
+      if (!mainStore.loginUser && item.name !== 'login') {
         return (
           <Route
             exact

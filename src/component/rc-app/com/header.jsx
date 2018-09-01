@@ -33,9 +33,7 @@ class Header extends React.Component {
         )}
         {!user ? null : (
           <li>
-            <a href="javascript:;" onClick={() => this.logout()}>
-              Logout
-            </a>
+            <a onClick={() => this.logout()}>Logout</a>
           </li>
         )}
       </ul>

@@ -10,27 +10,22 @@ import { userLoginFlow } from '../../../data/flows/user';
 @observer
 @gentx
 class Login extends Component {
-  @observable form = {
+  @observable
+  form = {
     username: '',
-    password: ''
-  }
+    password: '',
+  };
 
-  constructor(props) {
-    super(props);
-  }
-
-  @action 
+  @action
   changeFormVal(name, val) {
     this.form[name] = val;
   }
 
   login() {
-    let ob = of(
-      {
-        username: this.form.username,
-        password: this.form.password
-      }
-    );
+    let ob = of({
+      username: this.form.username,
+      password: this.form.password,
+    });
 
     ob = userLoginFlow(ob);
 
@@ -42,41 +37,45 @@ class Login extends Component {
           this.props.mainStore.setLoginUser(res);
           this.props.history.replace('/list');
         },
-        error => {
+        () => {
           NProgress.done();
-          alert(error.message);
-        }
+          // alert(error.message);
+        },
       ),
-      'login'
+      'login',
     );
   }
 
   render() {
     return (
       <div className="page page-login">
-        <form action="javascript:;">
+        <form onSubmit={(e) => e.preventDefault()}>
           <div>
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="username"
               value={this.form.username}
-              onChange={e => {
-                this.changeFormVal('username', e.target.value)
+              onChange={(e) => {
+                this.changeFormVal('username', e.target.value);
               }}
             />
           </div>
           <div>
-            <input 
-              type="text" 
-              placeholder="password" 
+            <input
+              type="text"
+              placeholder="password"
               value={this.form.password}
-              onChange={e => {
-                this.changeFormVal('password', e.target.value)
+              onChange={(e) => {
+                this.changeFormVal('password', e.target.value);
               }}
             />
           </div>
           <div>
-            <button className="button" onClick={this.login.bind(this)}>
+            <button
+              type="button"
+              className="button"
+              onClick={this.login.bind(this)}
+            >
               登录
             </button>
           </div>
