@@ -122,4 +122,5 @@ app.use(async (ctx) => {
 });
 
 /* == LISTEN  == */
+console.log('Please visit: ', `http://127.0.0.1:${devServerConf.port}`);
 app.listen(devServerConf.port);

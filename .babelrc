@@ -2,7 +2,7 @@
   "presets": [
     "@babel/preset-react",
     ["@babel/preset-env", {
-      "modules": false,
+      "modules": "commonjs",
       "targets": {
         "browsers": ["> 1%", "ie > 9"]
       },

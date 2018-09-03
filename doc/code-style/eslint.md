@@ -31,7 +31,7 @@
     ```
 5. 编写代码时，会提示错误信息，点击小灯泡修复(可能不同主题不同)。
 
-    ![vscode-eslint-fix]](./images/vscode-eslint-fix.jpeg).
+    ![vscode-eslint-fix]](./image/vscode-eslint-fix.jpeg).
 
 ## 打包时代码审查
 

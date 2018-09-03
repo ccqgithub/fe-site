@@ -122,11 +122,11 @@ react 项目推荐书籍管理模式：
 
 ## 代码风格
 
-- [Prettier 代码格式化](./docs/code-style/prettier.md)。
-- [Eslint 配置、使用](./docs/code-style/eslint.md)。
-- [Tslint 配置、使用](./docs/code-style/tslint.md)。
-- [Stylelint 配置、使用](./docs/code-style/stylelint.md)。
-- [Htmllint 配置、使用](./docs/code-style/htmllint.md)。
+- [Prettier 代码格式化](./doc/code-style/prettier.md)。
+- [Eslint 配置、使用](./doc/code-style/eslint.md)。
+- [Tslint 配置、使用](./doc/code-style/tslint.md)。
+- [Stylelint 配置、使用](./doc/code-style/stylelint.md)。
+- [Htmllint 配置、使用](./doc/code-style/htmllint.md)。
 
 ## Todo
 

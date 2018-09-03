@@ -4,9 +4,6 @@
     "plugins/markdown",
     "plugins/summarize"
   ],
-  "markdown": {
-    "tags": ["author", "classdesc", "description", "param", "property", "returns", "see", "throws", "vue"]
-  },
   "recurseDepth": 10,
   "source": {
     "include": ["fe/src"],
@@ -46,6 +43,6 @@
     "destination": "./dist/jsdoc/",
     "recurse": true,
     "readme": "README.md",
-    "tutorials": "./docs/"
+    "tutorials": "./doc/"
   }
 }
