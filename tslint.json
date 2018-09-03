@@ -1,7 +1,4 @@
 {
-  // "linterOptions": {
-  //   "exclude": "**/*.vue"
-  // },
   "extends": "tslint-config-gent",
   "rules": {
     "import-name": false
