@@ -53,7 +53,7 @@ module.exports = {
     // 未使用变量
     'no-unused-vars': ['warn', { args: 'none' }],
     // 不能使用console
-    'no-console': 'warn',
+    'no-console': 'off',
     // 禁止使用 javascript: url
     'no-script-url': 'warn',
     // 不能定义和父作用域同名变量
