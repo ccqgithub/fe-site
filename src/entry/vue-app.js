@@ -12,7 +12,7 @@ import 'nprogress/nprogress.css';
 
 const wx = require('../lib/jweixin-1.3.2');
 
-console.log(wx);
+// console.log(wx);
 
 Vue.debug = process.env.NODE_ENV === 'development';
 Vue.use(Vuex);
