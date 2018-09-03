@@ -1,6 +1,8 @@
 <template>
-  <div id="app" class="app">
-    
+  <div 
+    id="app" 
+    class="app"
+  >
     <div class="app-header">
       <x-header />
     </div>
@@ -8,7 +10,10 @@
     <div class="app-pages">
       <transition :name="transitionName">
         <keep-alive :include="includeReg">
-          <router-view :key="$route.path" ref="router" />
+          <router-view 
+            :key="$route.path" 
+            ref="router" 
+          />
         </keep-alive>
       </transition>
     </div>
@@ -20,31 +25,28 @@
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import VueRouter from 'vue-router';
 import routes from '../../vue-routes';
-import { getBaseUrl } from '../../lib/site';
-import { __ } from '../../lib/i18n';
+// import { getBaseUrl } from '../../lib/site';
+// import { __ } from '../../lib/i18n';
 import XHeader from './com/header.vue';
 import { mainStore } from '../../data/vue-stores/main';
 
 // router
-const baseUrl = location.pathname.replace(/^(.*?\/vue\/).*$/, '$1')
+const baseUrl = window.location.pathname.replace(/^(.*?\/vue\/).*$/, '$1');
 const router = new VueRouter({
   mode: 'history',
   base: baseUrl,
   routes,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
+      return savedPosition;
     }
-  }
+
+    return { x: 0, y: 0 };
+  },
 });
 // check login
 router.beforeEach((to, from, next) => {
-  if (
-    !mainStore.state.loginUser
-    && to.name != 'login'
-  ) {
+  if (!mainStore.state.loginUser && to.name !== 'login') {
     next('/login');
     return;
   }
@@ -52,24 +54,22 @@ router.beforeEach((to, from, next) => {
 });
 
 const routeQueue = [];
-let historyLength = history.length;
 
 @Component({
   name: 'App',
-  router: router,
+  router,
   components: {
-    XHeader
-  }
-})  
+    XHeader,
+  },
+})
 class App extends Vue {
-  
   data() {
     return {
       routeQueue: [this.$router.currentRoute],
-      historyLength: history.length,
+      historyLength: window.history.length,
       transitionName: 'slide-left',
-      init: false
-    }
+      init: false,
+    };
   }
 
   get user() {
@@ -91,7 +91,7 @@ class App extends Vue {
   }
 
   clearCachePages() {
-    Object.keys(this.cachePages).forEach(key => {
+    Object.keys(this.cachePages).forEach((key) => {
       this.cachePages[key].$destroy();
       delete this.cachePages[key];
     });
@@ -102,10 +102,10 @@ class App extends Vue {
     this.$router.replace('/login');
   }
 
-  @Watch('user') 
-  onUserChange(to ,from) {
-    console.log(to)
-  }
+  // @Watch('user')
+  // onUserChange(to, from) {
+  //   console.log(to);
+  // }
 
   @Watch('$route')
   onRouteChange(to, from) {
@@ -116,15 +116,15 @@ class App extends Vue {
     this.cachePages[this.$route.path] = this.$refs.router;
 
     let transitionName = 'slide-left';
-    let curHistoryLength = history.length;
-    let routeQueue = this.routeQueue;
+    let curHistoryLength = window.history.length;
+    let theRouteQueue = this.routeQueue;
 
     // back
     if (
-      curHistoryLength <= this.historyLength
-      && routeQueue.length > 1 
-      && from.fullPath == routeQueue[routeQueue.length - 1].fullPath
-      && to.fullPath == routeQueue[routeQueue.length - 2].fullPath
+      curHistoryLength <= this.historyLength &&
+      routeQueue.length > 1 &&
+      from.fullPath === theRouteQueue[routeQueue.length - 1].fullPath &&
+      to.fullPath === theRouteQueue[routeQueue.length - 2].fullPath
     ) {
       routeQueue.pop();
       transitionName = 'slide-right';
@@ -147,7 +147,7 @@ export default App;
     left: 0;
     top: 0;
     right: 0;
-    height: 50px
+    height: 50px;
   }
 
   .app-pages {
@@ -162,13 +162,15 @@ export default App;
   .page {
     height: 100%;
     overflow: auto;
-    transition: all .5s ease;
+    transition: all 0.5s ease;
     z-index: 1;
   }
-  .slide-left-enter, .slide-right-leave-active {
+  .slide-left-enter,
+  .slide-right-leave-active {
     transform: translate(100%, 0);
   }
-  .slide-left-leave-active, .slide-right-enter {
+  .slide-left-leave-active,
+  .slide-right-enter {
     transform: translate(-100%, 0);
   }
 }

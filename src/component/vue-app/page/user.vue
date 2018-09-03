@@ -1,28 +1,28 @@
 <template>
   <div class="page">
     <div class="user">
-      user: {{user.username}}
+      user: {{ user.username }}
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'page-user',
+  name: 'PageUser',
   computed: {
     user() {
       return this.$store.state.loginUser;
-    }
+    },
   },
   watch: {
     user() {
       // console.log('>>> user change')
-    }
+    },
   },
   destroyed() {
-    console.log('user >>> destroyed')
-  }
-}
+    // console.log('user >>> destroyed')
+  },
+};
 </script>
 
 <style lang="less" scoped>

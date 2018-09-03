@@ -10,39 +10,39 @@
 
     <li v-if="user">
       <router-link to="user">
-        user: {{user.username}}
+        user: {{ user.username }}
       </router-link>
     </li>
 
     <li v-if="user">
-      <a href="javascript:;" @click="logout">Logout</a>
+      <a 
+        href="javascript:;" 
+        @click="logout"
+      >Logout</a>
     </li>
   </ul>
 </template>
 
 <script>
-
 export default {
   name: 'Header',
   data() {
     return {
       //
-    }
+    };
   },
   computed: {
     user() {
-      return this.$store.state.loginUser
-    }
+      return this.$store.state.loginUser;
+    },
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     logout() {
       this.$root.logout();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -52,7 +52,7 @@ export default {
   display: flex;
   justify-content: center;
 
-  li {    
+  li {
     line-height: 50px;
     border-right: 1px solid #fff;
 

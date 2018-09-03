@@ -106,7 +106,7 @@ rewrites.forEach((item) => {
 });
 
 /* == REWRITE PUBLIC PATH TO DIST  == */
-if (publicConf.publicPath != '/') {
+if (publicConf.publicPath !== '/') {
   let publicPath = escapeStringRegexp(publicConf.publicPath);
   let exp = new RegExp(`^${publicPath}(.+)$`);
   app.use(rewrite(exp, '/$1'));

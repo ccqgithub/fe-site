@@ -24,9 +24,9 @@ const fs = require('fs');
  *   }
  * }
  */
-module.exports = function findEntry(conf){
+module.exports = function findEntry(conf) {
   let contextPath = conf.contextPath;
-  let entryDirs = conf.entryDirs
+  let entryDirs = conf.entryDirs;
   let template = conf.template;
   let files = [];
 

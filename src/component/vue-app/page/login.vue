@@ -2,13 +2,24 @@
   <div class="page">
     <form action="javascript:;">
       <div>
-        <input type="text" placeholder="username" v-model="username">
+        <input 
+          type="text" 
+          placeholder="username" 
+          v-model="username"
+        >
       </div>
       <div>
-        <input type="text" placeholder="password" v-model="password">
+        <input 
+          type="text" 
+          placeholder="password" 
+          v-model="password"
+        >
       </div>
       <div>
-        <button class="button" @click="login">
+        <button 
+          class="button" 
+          @click="login"
+        >
           登录
         </button>
       </div>
@@ -22,39 +33,39 @@ import { of } from 'rxjs';
 import { userLoginFlow } from '../../../data/flows/user';
 
 export default {
-  name: 'page-login',
+  name: 'PageLogin',
   data() {
     return {
       username: '',
-      password: ''
-    }
+      password: '',
+    };
   },
   methods: {
     login() {
       let ob = of({
         username: this.username,
-        password: this.password
+        password: this.password,
       });
       ob = userLoginFlow(ob);
 
       NProgress.start();
       this.$bindSub(
         ob.subscribe(
-          res => {
+          (res) => {
             NProgress.done();
             this.$store.commit('setLoginUser', res);
             this.$router.replace('/list');
           },
-          error => {
+          (error) => {
             NProgress.done();
-            alert(error.message);
-          }
+            // alert(error.message);
+          },
         ),
-        'login'
+        'login',
       );
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

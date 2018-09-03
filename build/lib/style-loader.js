@@ -114,7 +114,7 @@ exports.getStyleLoader = function getStyleLoader(loader, conf) {
   ];
 
   // postcss file
-  if (config.postcssOptions || loader == 'postcss') {
+  if (config.postcssOptions || loader === 'postcss') {
     loaders.push({
       loader: 'postcss-loader',
       options: Object.assign(
@@ -127,7 +127,7 @@ exports.getStyleLoader = function getStyleLoader(loader, conf) {
   }
 
   // preprocess loader exclude postcss
-  if (loader != 'postcss' && loader != 'css') {
+  if (loader !== 'postcss' && loader !== 'css') {
     loaders.push({
       loader: `${loader}-loader`,
       options: Object.assign(

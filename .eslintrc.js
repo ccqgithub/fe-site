@@ -24,7 +24,8 @@ module.exports = {
     'prettier',
   ],
   extends: [
-    'plugin:vue/recommended',
+    // https://github.com/vuejs/eslint-plugin-vue#bulb-rules
+    'plugin:vue/strongly-recommended',
 
     // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
     'airbnb-base',
@@ -45,22 +46,24 @@ module.exports = {
     es6: true,
   },
   rules: {
+    // 强制使用全等
+    eqeqeq: 'warn',
     // prettier 格式化
     'prettier/prettier': 'warn',
     // 未使用变量
-    'no-unused-vars': 'warn',
+    'no-unused-vars': ['warn', { args: 'none' }],
     // 不能使用console
     'no-console': 'warn',
     // 禁止使用 javascript: url
     'no-script-url': 'warn',
+    // 不能定义和父作用域同名变量
+    'no-shadow': 'warn',
     // 未改变的变量，强制使用const
     'prefer-const': 'off',
     // 只能使用解构获取对象的值
     'prefer-destructuring': 'off',
     // 不能导入dependencies之外的模块，比如devDependencies
     'import/no-extraneous-dependencies': 'off',
-    // 强制使用全等
-    eqeqeq: 'warn',
     // 不允许全局require
     'global-require': 'off',
     // 要求 return 语句要么总是指定返回的值，要么不指定
@@ -77,6 +80,10 @@ module.exports = {
     'react/destructuring-assignment': 'off',
     // 转义html实体字符
     'react/no-unescaped-entities': 'off',
+    // html属性必须带引号
+    'vue/html-quotes': 'error',
+    // 不能在模板里用this
+    'vue/this-in-template': 'error',
   },
   overrides: [
     // build相关运行在node环境

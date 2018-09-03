@@ -2,25 +2,34 @@
   <div class="page">
     <div class="list">
       <div class="top">
-        <button class="button" @click="add">
+        <button 
+          class="button" 
+          @click="add"
+        >
           添加
         </button>
       </div>
 
       <table>
-        <tbody v-for="todo in todoList" :key="todo.id">
+        <tbody 
+          v-for="todo in todoList" 
+          :key="todo.id"
+        >
           <tr>
             <td>
-              {{todo.id}}
+              {{ todo.id }}
             </td>
             <td>
-              {{todo.title}}
+              {{ todo.title }}
             </td>
             <td>
-              {{todo.description}}
+              {{ todo.description }}
             </td>
             <td>
-              <button class="button" @click="del(todo)">
+              <button 
+                class="button" 
+                @click="del(todo)"
+              >
                 删除
               </button>
             </td>
@@ -33,21 +42,21 @@
 
 <script>
 import NProgress from 'nprogress';
-import { of, observable, Subscription } from 'rxjs';
+import { of } from 'rxjs';
 import { todoFlows } from '../../../data/flows/todo';
 
 export default {
-  name: 'page-list',
+  name: 'PageList',
   computed: {
     todoList() {
       return this.$store.state.todo.todoList;
-    }
+    },
   },
   mounted() {
     this.getList();
   },
   destroyed() {
-    console.log('list >>> destroyed')
+    // console.log('list >>> destroyed')
   },
   methods: {
     getList() {
@@ -60,14 +69,14 @@ export default {
       ob = todoFlows.list(ob);
       // subscribe
       let sub = ob.subscribe(
-        res => {
+        (res) => {
           NProgress.done();
           this.$store.commit('todo/update', res);
         },
-        error => {
+        (error) => {
           NProgress.done();
-          alert(error.message);
-        }
+          // alert(error.message);
+        },
       );
       // bind subscription
       this.$bindSub(sub, 'getList');
@@ -77,45 +86,45 @@ export default {
       let ob = of({
         id: Date.now(),
         title: 'season',
-        description: 'xxx'
+        description: 'xxx',
       });
       ob = todoFlows.add(ob);
       this.$bindSub(
         ob.subscribe(
-          res => {
+          (res) => {
             NProgress.done();
             this.$store.commit('todo/add', res);
           },
-          error => {
+          (error) => {
             NProgress.done();
-            alert(error.message);
-          }
+            // alert(error.message);
+          },
         ),
-        'add'
+        'add',
       );
     },
     del(item) {
       NProgress.start();
-      let ob =  of({
-        id: item.id
+      let ob = of({
+        id: item.id,
       });
       ob = todoFlows.del(ob);
       this.$bindSub(
         ob.subscribe(
-          res => {
+          (res) => {
             NProgress.done();
             this.$store.commit('todo/del', item.id);
           },
-          error => {
+          (error) => {
             NProgress.done();
-            alert(error.message);
-          }
+            // alert(error.message);
+          },
         ),
-        'del'
+        'del',
       );
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

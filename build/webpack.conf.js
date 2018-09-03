@@ -62,7 +62,7 @@ const babelLoaderOptions = {
 // ====================================================================
 const stringReplaceLoaderOptions = [];
 Object.keys(defines).forEach((key) => {
-  if (key.indexOf('REPLACE_') != 0) return;
+  if (key.indexOf('REPLACE_') !== 0) return;
   stringReplaceLoaderOptions.push({
     search: `\\$\\{${key}\\}`,
     replace: defines[key],
