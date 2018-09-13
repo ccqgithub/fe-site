@@ -45,7 +45,7 @@ const beforePromise = superagentPromise(
 
 
 // get
-agent.apiGet = function(url, query={}, opts={}) {
+agent.apiGet = function apiGet(url, query={}, opts={}) {
   return this.get(url)
     .use(before)
     .use(beforePromise)
@@ -54,7 +54,7 @@ agent.apiGet = function(url, query={}, opts={}) {
 }
 
 // form
-agent.apiForm = function(url, data={}, opts={}) {
+agent.apiForm = function apiForm(url, data={}, opts={}) {
   return this.post(url)
     .use(before)
     .use(beforePromise)
@@ -64,7 +64,7 @@ agent.apiForm = function(url, data={}, opts={}) {
 }
 
 // form
-agent.apiJson = function(url, data={}, opts={}) {
+agent.apiJson = function apiJson(url, data={}, opts={}) {
   return this.get(url)
     .use(before)
     .use(beforePromise)
