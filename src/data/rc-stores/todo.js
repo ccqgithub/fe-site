@@ -1,13 +1,14 @@
-import { observable, computed, action, toJS } from "mobx";
+import { observable, action } from 'mobx';
 
 export class TodoStore {
-  @observable todoList = [];
+  @observable
+  todoList = [];
 
   @action.bound
   update(list) {
     this.todoList = list;
   }
-  
+
   @action.bound
   add(item) {
     this.todoList.push(item);
@@ -19,7 +20,7 @@ export class TodoStore {
     this.todoList.forEach((item, i) => {
       if (item.id === id) index = i;
     });
-    if (index != -1) this.todoList.splice(index, 1);
+    if (index !== -1) this.todoList.splice(index, 1);
   }
 
   @action.bound

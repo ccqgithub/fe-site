@@ -53,6 +53,10 @@ const cacheLoaderOptions = {
 // ====================================================================
 const babelLoaderOptions = {
   loader: 'babel-loader',
+  options: {
+    cacheDirectory: path.resolve(__dirname, '../.cache'),
+    configFile: false,
+  }
 };
 
 // ====================================================================

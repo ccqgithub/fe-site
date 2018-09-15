@@ -6,16 +6,16 @@ Vue.use(Vuex);
 
 const mainStore = new Vuex.Store({
   state: {
-    loginUser: null
+    loginUser: null,
   },
   modules: {
-    todo: getTodoModule()
+    todo: getTodoModule(),
   },
   mutations: {
     setLoginUser(state, user) {
       state.loginUser = user;
-    }
-  }
+    },
+  },
 });
 
 export { mainStore };

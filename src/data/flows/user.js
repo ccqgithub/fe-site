@@ -4,7 +4,5 @@ import { login } from '../sources/user';
 
 // user login flow
 export function userLoginFlow(input) {
-  return input.pipe(
-    concatMap(login)
-  );
+  return input.pipe(concatMap(login));
 }

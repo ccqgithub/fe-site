@@ -10,7 +10,7 @@ node_modules
 
 /dist
 /server/i18n/temp
-/cache
+.cache
 .cache-loader
 .session
 

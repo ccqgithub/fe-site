@@ -5,7 +5,7 @@ import * as todoSources from '../sources/todo';
 const todoFlows = groupFlows(flowSources(todoSources), {
   groupName: 'todo',
   beforeGuards: [logGuard],
-  afterGuards: [logGuard]
+  afterGuards: [logGuard],
 });
 
 export { todoFlows };

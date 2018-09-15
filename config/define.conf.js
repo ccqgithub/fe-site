@@ -11,7 +11,6 @@ const prjConf = require('./project.conf');
 // common
 const COMMON_CONF = {
   GOOGLE_MAP_AK: JSON.stringify('cjxzljSfdfdsfdsmfdmsfdsxxxxx'),
-  GITHUB_API_BASEURL: JSON.stringify('https://www.github.com/'),
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   PUBLIC_PATH: JSON.stringify('/fe-static/'),
 

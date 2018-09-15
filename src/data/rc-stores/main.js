@@ -1,7 +1,8 @@
-import { observable, computed, action } from "mobx";
+import { observable, action } from 'mobx';
 
 export class MainStore {
-  @observable loginUser = null;
+  @observable
+  loginUser = null;
 
   @action.bound
   setLoginUser(user) {

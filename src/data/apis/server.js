@@ -1,76 +1,57 @@
 import superagent from 'superagent';
-import superagentPromise from '../../lib/superagent-promise';
+
+const baseURL = API_BASEURL;
 
 // agent
-const agent = superagent.agent();
+const api = superagent
+  .agent()
+  // intercept request
+  .use((request) => {
+    // set baseurl
+    if (!/^https?:\/\//.test(request.url)) {
+      let url = request.url.replace(/^\//, '');
+      request.url = baseURL.replace(/\/$/, '') + url;
+    }
 
-// before
-const before = (request) => {
-  // set baseurl
-  const baseURL = GITHUB_API_BASEURL;
-  if (!/^https?:\/\//.test(request.url)) {
-    let url = request.url.replace(/^\//, '');
-    request.url = baseURL.replace(/\/$/, '') + url;
-  }
+    // set headers
+    // headers
+    // let token = 'xxx';
+    // let locale = 'zh-CN'
+    // request.set('Token', token);
+    // request.set('Locale', locale);
 
-  // set headers
-  // headers
-  // let token = 'xxx';
-  // let locale = 'zh-CN'
-  // request.set('Token', token);
-  // request.set('Locale', locale);
+    // type
+    request.accept('json');
 
-  // type
-  request.accept('json');
+    return request;
+  })
+  // parse result
+  .use((request) => {
+    request.originThen = request.then;
+    request.then = function then(resolveFn, rejectFn) {
+      return request
+        .originThen(
+          (res) => {
+            // if (res.body && res.body.code !== 200) {
+            //   res.status = res.body.code;
+            //   res.message = res.body.message;
+            //   return Promise.reject(res);
+            // }
 
-  return request;
-}
+            return res;
+          },
+          (err) => {
+            // if (err.response.body) {
+            //   return Promise.resolve(err.response.body);
+            // }
 
-// before promise
-const beforePromise = superagentPromise(
-  (res) => {
-    // if (res.code != 200) {
-    //   res.status = res.code;
-    //   res.message = res.message;
-    //   return Promise.reject(res);
-    // }
-    return res;
-  },
-  (err) => {
-    let res = err.response;
-    res.message = err.message;
-    return Promise.reject(res)
-  }
-);
+            return Promise.reject(err);
+          },
+        )
+        .then(resolveFn, rejectFn);
+    };
 
+    return request;
+  });
 
-// get
-agent.apiGet = function apiGet(url, query={}, opts={}) {
-  return this.get(url)
-    .use(before)
-    .use(beforePromise)
-    .accept('json')
-    .query(query);
-}
-
-// form
-agent.apiForm = function apiForm(url, data={}, opts={}) {
-  return this.post(url)
-    .use(before)
-    .use(beforePromise)
-    .accept('json')
-    .type('form')
-    .send(data);
-}
-
-// form
-agent.apiJson = function apiJson(url, data={}, opts={}) {
-  return this.get(url)
-    .use(before)
-    .use(beforePromise)
-    .accept('json')
-    .type('json')
-    .send(data);
-}
-
-export default agent;
+export default api;

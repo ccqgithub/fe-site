@@ -1,4 +1,3 @@
-
 import { makeObservable } from 'gentx';
 
 /**
@@ -6,16 +5,13 @@ import { makeObservable } from 'gentx';
  */
 
 // todo list
-export function list({
-  page=1,
-  count=20
-}) {
+export function list({ page = 1, count = 20 }) {
   let todoList = [
     {
       id: 1,
       title: 'title',
-      description: 'description'
-    }
+      description: 'description',
+    },
   ];
 
   // equal to: Observable.from([todoList])
@@ -24,12 +20,12 @@ export function list({
 
 // add todo
 export function add(todo) {
-  let promise =new Promise((resolve, reject) => {
+  let promise = new Promise((resolve, reject) => {
     setTimeout(() => {
       let data = {
         ...todo,
-        id: Date.now()
-      }
+        id: Date.now(),
+      };
       resolve(data);
     }, 1000);
   });
@@ -40,7 +36,7 @@ export function add(todo) {
 
 // del todo
 export function del(todoId) {
-  let promise =new Promise((resolve, reject) => {
+  let promise = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(true);
     }, 1000);
