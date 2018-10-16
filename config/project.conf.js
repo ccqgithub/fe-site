@@ -7,7 +7,7 @@ module.exports = {
   // build/dev-server.js
   devServer: {
     // 端口
-    port: 3003,
+    port: 30003,
     // 跨域
     // https://github.com/koajs/cors
     proxyCors: {

@@ -34,7 +34,10 @@ const styleLoaders = getStyleLoaders({
     },
   },
   lessOptions: {
-    strictMath: 'off',
+    relativeUrls: true,
+    math: 'parens-division',
+    strictUnits: true,
+    paths: [path.resolve(__dirname, '../node_modules')],
   },
 });
 
