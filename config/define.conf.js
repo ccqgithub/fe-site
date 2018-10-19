@@ -10,9 +10,9 @@ const prjConf = require('./project.conf');
 /* === config start === */
 // common
 const COMMON_CONF = {
-  GOOGLE_MAP_AK: JSON.stringify('cjxzljSfdfdsfdsmfdmsfdsxxxxx'),
-  'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   PUBLIC_PATH: JSON.stringify('/fe-static/'),
+  'process.env.NODE_ENV': NODE_ENV,
+  'process.env.APP_ENV': APP_ENV,
 
   // for: string-replace-loader
   REPLACE_PUBLIC_PATH: '/fe-static/',

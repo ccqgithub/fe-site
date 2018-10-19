@@ -1,8 +1,19 @@
+# just a sample
 web:
-  image: nginx
+  image: 'fe-site-demo'
   ports:
-   - "8080:80"
+    - 80/tcp
   environment:
-   - NGINX_HOST=www.server.com
-   - NGINX_PORT=80
+    - NGINX_HOST=www.server.com
+    - NGINX_PORT=80
+    - REWRITE_ROOT_PATH=no_rewirte_root
   command: /bin/bash -c "envsubst < /etc/nginx/conf.d/server.conf.template  > /etc/nginx/conf.d/server.conf && nginx -g 'daemon off;'"
+  restart: always
+  labels:
+    aliyun.scale: '1'
+    aliyun.routing.port_80: 'http://www.server.com'
+  memswap_limit: 0
+  shm_size: 0
+  memswap_reservation: 0
+  kernel_memory: 0
+  name: web
