@@ -17,7 +17,14 @@ module.exports = {
         semi: true,
       },
     ],
+    'selector-type-no-unknown': [
+      true,
+      {
+        ignoreTypes: ['page', 'cover-view', 'swiper', 'swiper-item'],
+      },
+    ],
     'no-empty-source': null,
+    'color-hex-case': null,
   },
   defaultSeverity: 'warning',
 };
