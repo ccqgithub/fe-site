@@ -1,12 +1,13 @@
 {
   "plugins": [
+    "node_modules/jsdoc-babel",
     "node_modules/jsdoc-vuedoc",
     "plugins/markdown",
     "plugins/summarize"
   ],
   "recurseDepth": 10,
   "source": {
-    "include": ["fe/src"],
+    "include": ["src"],
     "includePattern": ".+\\.(js|vue)$",
     "excludePattern": "(^|\\/|\\\\)_"
   },

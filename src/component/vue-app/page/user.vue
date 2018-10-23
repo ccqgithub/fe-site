@@ -7,6 +7,11 @@
 </template>
 
 <script>
+/**
+ * sidebar component description
+ * @vuedoc
+ * @exports component/vue-app/page/user
+ */
 export default {
   name: 'PageUser',
   computed: {
