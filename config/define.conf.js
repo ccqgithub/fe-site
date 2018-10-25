@@ -11,8 +11,8 @@ const prjConf = require('./project.conf');
 // common
 const COMMON_CONF = {
   PUBLIC_PATH: JSON.stringify('/fe-static/'),
-  'process.env.NODE_ENV': NODE_ENV,
-  'process.env.APP_ENV': APP_ENV,
+  'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+  'process.env.APP_ENV': JSON.stringify(APP_ENV),
 
   // for: string-replace-loader
   REPLACE_PUBLIC_PATH: '/fe-static/',

@@ -59,7 +59,7 @@ const babelLoaderOptions = {
   options: {
     cacheDirectory: path.resolve(__dirname, '../.cache'),
     configFile: false,
-  }
+  },
 };
 
 // ====================================================================
