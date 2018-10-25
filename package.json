@@ -1,6 +1,6 @@
 {
   "name": "fe-site",
-  "sideEffects": true,
+  "sideEffects": [],
   "version": "1.0.2",
   "description": "",
   "main": "index.js",
