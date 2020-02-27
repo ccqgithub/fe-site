@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <%= htmlWebpackPlugin.tags.headTags %>
   
-  ${require('./partial/meta.html')}
-  ${require('./partial/language.html')}
+  <%= require('./partial/meta.html') %>
+  <%= require('./partial/language.html') %>
 
   <title>
     fe-site
   </title>
 
-  ${require('./partial/tongji.html')}
+  <%= require('./partial/tongji.html') %>
 
-  <!-- html-webpack-plugin-css -->
 </head>
 <body>
 
-  <div id="app"> 
+  <div id="app" class="app"> 
   </div>
 
-  <!-- html-webpack-plugin-script -->
+  <%= htmlWebpackPlugin.tags.bodyTags %>
+ 
 </body>
 </html>

@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const PlaceAssetsPlugin = require('html-webpack-place-assets-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const getStyleLoaders = require('./lib/style-loader').getStyleLoaders;
 const findEntry = require('./lib/find-entry');
@@ -124,6 +123,7 @@ Object.keys(entries).forEach((key) => {
       template,
       filename,
       entry: item,
+      chunks: [key],
       inject: false,
     }),
   );
@@ -162,7 +162,7 @@ configExports.resolve = {
 configExports.module = {
   rules: [
     {
-      test: /\.html$/,
+      test: /partial\/.*\.html$/,
       use: [
         {
           loader: 'html-loader',
@@ -180,7 +180,7 @@ configExports.module = {
           options: {
             multiple: stringReplaceLoaderOptions,
           },
-        },
+        }
       ],
     },
     {
@@ -332,14 +332,6 @@ configExports.plugins = [
 ]
   // html webpack plugin
   .concat(htmlPlugins)
-  // inject assets in html at the replacement
-  .concat([
-    new PlaceAssetsPlugin({
-      headReplaceExp: /<!-- html-webpack-plugin-css -->/,
-      bodyReplaceExp: /<!-- html-webpack-plugin-script -->/,
-      tagsJoin: '\n  ',
-    }),
-  ])
   // hot reload
   .concat(isProduction ? [] : new webpack.HotModuleReplacementPlugin({}));
 
