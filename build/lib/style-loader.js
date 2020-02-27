@@ -100,7 +100,6 @@ exports.getStyleLoader = function getStyleLoader(loader, conf) {
     options: Object.assign(
       {
         importLoaders: 0,
-        minimize: config.compress,
         sourceMap: config.sourceMap,
       },
       config.cssOptions,
