@@ -1,8 +1,6 @@
 <template>
   <div class="page">
-    <div class="user">
-      user: {{ user.username }}
-    </div>
+    <div class="user">user: {{ user.username }}</div>
   </div>
 </template>
 
@@ -17,16 +15,16 @@ export default {
   computed: {
     user() {
       return this.$store.state.loginUser;
-    },
+    }
   },
   watch: {
     user() {
       // console.log('>>> user change')
-    },
+    }
   },
   destroyed() {
     // console.log('user >>> destroyed')
-  },
+  }
 };
 </script>
 

@@ -4,9 +4,9 @@ module.exports = {
       '@mapbox/stylelint-processor-arbitrary-tags',
       {
         fileFilterRegex: [/\.vue$/],
-        endTag: '</\\s*?style>',
-      },
-    ],
+        endTag: '</\\s*?style>'
+      }
+    ]
   ],
   plugins: ['stylelint-prettier'],
   extends: ['stylelint-config-recommended', 'stylelint-prettier/recommended'],
@@ -14,17 +14,17 @@ module.exports = {
     'prettier/prettier': [
       true,
       {
-        semi: true,
-      },
+        semi: true
+      }
     ],
     'selector-type-no-unknown': [
       true,
       {
-        ignoreTypes: ['page', 'cover-view', 'swiper', 'swiper-item'],
-      },
+        ignoreTypes: ['page', 'cover-view', 'swiper', 'swiper-item']
+      }
     ],
     'no-empty-source': null,
-    'color-hex-case': null,
+    'color-hex-case': null
   },
-  defaultSeverity: 'warning',
+  defaultSeverity: 'warning'
 };

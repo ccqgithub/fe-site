@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import { VueGentX } from 'gentx';
 import { mainStore } from '../data/vue-stores/main';
 import App from '../component/vue-app/app.vue';
 
@@ -15,7 +14,6 @@ const wx = require('../lib/jweixin-1.3.2');
 
 Vue.debug = process.env.NODE_ENV === 'development';
 Vue.use(Vuex);
-Vue.use(VueGentX);
 Vue.use(VueRouter);
 
 // global wx

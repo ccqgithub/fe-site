@@ -9,18 +9,18 @@ module.exports = function babelConfig(api) {
         {
           modules: 'commonjs',
           targets: {
-            browsers: ['> 1%', 'ie > 9'],
+            browsers: ['> 1%', 'ie > 9']
           },
-          useBuiltIns: 'usage',
-        },
+          useBuiltIns: 'usage'
+        }
       ],
-      '@babel/preset-react',
+      '@babel/preset-react'
     ],
     plugins: [
       ['@babel/plugin-proposal-decorators', { legacy: true }],
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-class-properties', { loose: true }]
     ].concat(
-      process.env.NODE_ENV === 'development' ? ['react-hot-loader/babel'] : [],
-    ),
+      process.env.NODE_ENV === 'development' ? ['react-hot-loader/babel'] : []
+    )
   };
 };

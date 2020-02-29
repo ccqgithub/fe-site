@@ -7,8 +7,8 @@
 - 配置：统一明确的配置文件（支持开发和生产模式，多部署环境）。
 - 构建：webpack4 (多html，分包，dev server，热加载)。
 - 样式：less、sass、stylus、postcss。
-- vue项目：vue + vue-router + vuex + rxjs + gentx (推荐配置)。
-- ract项目：react + react-router + mobx + mobx-react + rxjs + gentx (推荐配置)。
+- vue项目：vue + vue-router + vuex。
+- ract项目：react + react-router + mobx + mobx-react。
 - 国际化：i18n + [i18n-service](https://github.com/ccqgithub/i18n-service)。
 - docker: 有 docker + nginx 配置示例。
 - nginx: 有 nginx 配置示例。

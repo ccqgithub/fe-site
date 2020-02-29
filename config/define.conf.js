@@ -11,26 +11,23 @@ const prjConf = require('./project.conf');
 // common
 const COMMON_CONF = {
   PUBLIC_PATH: JSON.stringify('/fe-static/'),
+  I18N_CONFIG: JSON.stringify(prjConf.i18n),
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-  'process.env.APP_ENV': JSON.stringify(APP_ENV),
-
-  // for: string-replace-loader
-  REPLACE_PUBLIC_PATH: '/fe-static/',
-  REPLACE_I18N_CONFIG: JSON.stringify(prjConf.i18n),
+  'process.env.APP_ENV': JSON.stringify(APP_ENV)
 };
 
 // envs
 const ENV_CONF = {
   // dev
   dev: {
-    API_BASEURL: JSON.stringify('https://xxx.api.com/'),
+    API_BASEURL: JSON.stringify('https://xxx.api.com/')
   },
   // prod
   prod: {
-    API_BASEURL: JSON.stringify('https://xxx.api.com/'),
-  },
+    API_BASEURL: JSON.stringify('https://xxx.api.com/')
+  }
 };
 /* === config end === */
 
 // module.exports
-module.exports = Object.assign({}, COMMON_CONF, ENV_CONF[APP_ENV]);
+module.exports = { ...COMMON_CONF, ...ENV_CONF[APP_ENV] };

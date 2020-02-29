@@ -6,11 +6,11 @@
 <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="expires" content="0">
 
-<link rel="apple-touch-icon" sizes="57x57" href="${REPLACE_PUBLIC_PATH}favicon.ico" />
-<link rel="apple-touch-icon" sizes="114x114" href="${REPLACE_PUBLIC_PATH}favicon.ico" />
-<link rel="apple-touch-icon" sizes="72x72" href="${REPLACE_PUBLIC_PATH}favicon.ico" />
-<link rel="apple-touch-icon" sizes="144x144" href="${REPLACE_PUBLIC_PATH}favicon.ico" />
+<link rel="apple-touch-icon" sizes="57x57" href="<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" />
+<link rel="apple-touch-icon" sizes="114x114" href="<<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" />
+<link rel="apple-touch-icon" sizes="72x72" href="<<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" />
+<link rel="apple-touch-icon" sizes="144x144" href="<<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" />
 
-<link href="${REPLACE_PUBLIC_PATH}favicon.ico" rel="bookmark" type="image/x-icon" />
-<link href="${REPLACE_PUBLIC_PATH}favicon.ico" rel="icon" type="image/x-icon" />
-<link href="${REPLACE_PUBLIC_PATH}favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="<<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" rel="bookmark" type="image/x-icon" />
+<link href="<<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" rel="icon" type="image/x-icon" />
+<link href="<<%= JSON.parse(htmlWebpackPlugin.options.defines.PUBLIC_PATH) %>favicon.ico" rel="shortcut icon" type="image/x-icon" />

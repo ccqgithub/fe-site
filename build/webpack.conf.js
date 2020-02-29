@@ -128,6 +128,8 @@ Object.keys(entries).forEach((key) => {
       entry: item,
       chunks: [key],
       inject: false,
+      minify: false,
+      defines,
     }),
   );
 });
@@ -171,6 +173,34 @@ configExports.module = {
           loader: 'html-loader',
           options: {
             attrs: ['img:src'],
+            minimize: false,
+            removeComments: false,
+            collapseWhitespace: false,
+            removeAttributeQuotes: false,
+            interpolate: 'require',
+          },
+        },
+        // {
+        //   loader: 'string-replace-loader',
+        //   options: {
+        //     multiple: stringReplaceLoaderOptions,
+        //   },
+        // }
+      ],
+    },
+    {
+      test: /html\/[^/]*\.html$/,
+      use: [
+        {
+          loader: 'ejs-loader',
+        },
+        {
+          loader: 'extract-loader',
+        },
+        {
+          loader: 'html-loader',
+          options: {
+            attrs: ['img:src'],
             minimize: true,
             removeComments: false,
             collapseWhitespace: false,
@@ -178,12 +208,12 @@ configExports.module = {
             interpolate: 'require',
           },
         },
-        {
-          loader: 'string-replace-loader',
-          options: {
-            multiple: stringReplaceLoaderOptions,
-          },
-        }
+        // {
+        //   loader: 'string-replace-loader',
+        //   options: {
+        //     multiple: stringReplaceLoaderOptions,
+        //   },
+        // }
       ],
     },
     {

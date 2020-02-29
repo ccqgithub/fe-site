@@ -1,8 +1,5 @@
 <template>
-  <div 
-    id="app" 
-    class="app"
-  >
+  <div id="app" class="app">
     <div class="app-header">
       <x-header />
     </div>
@@ -10,14 +7,10 @@
     <div class="app-pages">
       <transition :name="transitionName">
         <keep-alive :include="includeReg">
-          <router-view 
-            :key="$route.path" 
-            ref="router" 
-          />
+          <router-view :key="$route.path" ref="router" />
         </keep-alive>
       </transition>
     </div>
-
   </div>
 </template>
 
@@ -42,7 +35,7 @@ const router = new VueRouter({
     }
 
     return { x: 0, y: 0 };
-  },
+  }
 });
 // check login
 router.beforeEach((to, from, next) => {
@@ -53,14 +46,12 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-const routeQueue = [];
-
 @Component({
   name: 'App',
   router,
   components: {
-    XHeader,
-  },
+    XHeader
+  }
 })
 class App extends Vue {
   data() {
@@ -68,7 +59,7 @@ class App extends Vue {
       routeQueue: [this.$router.currentRoute],
       historyLength: window.history.length,
       transitionName: 'slide-left',
-      init: false,
+      init: false
     };
   }
 
@@ -87,7 +78,7 @@ class App extends Vue {
 
   mounted() {
     // 当前路由加入队列
-    routeQueue.push(this.$router.currentRoute);
+    // routeQueue.push(this.$router.currentRoute);
   }
 
   clearCachePages() {
@@ -122,14 +113,14 @@ class App extends Vue {
     // back
     if (
       curHistoryLength <= this.historyLength &&
-      routeQueue.length > 1 &&
-      from.fullPath === theRouteQueue[routeQueue.length - 1].fullPath &&
-      to.fullPath === theRouteQueue[routeQueue.length - 2].fullPath
+      theRouteQueue.length > 1 &&
+      from.fullPath === theRouteQueue[theRouteQueue.length - 1].fullPath &&
+      to.fullPath === theRouteQueue[theRouteQueue.length - 2].fullPath
     ) {
-      routeQueue.pop();
+      theRouteQueue.pop();
       transitionName = 'slide-right';
     } else {
-      routeQueue.push(to);
+      theRouteQueue.push(to);
     }
 
     this.transitionName = transitionName;

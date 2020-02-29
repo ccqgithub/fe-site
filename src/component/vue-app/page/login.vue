@@ -2,24 +2,13 @@
   <div class="page">
     <form action="javascript:;">
       <div>
-        <input 
-          type="text" 
-          placeholder="username" 
-          v-model="username"
-        >
+        <input type="text" placeholder="username" v-model="username" />
       </div>
       <div>
-        <input 
-          type="text" 
-          placeholder="password" 
-          v-model="password"
-        >
+        <input type="text" placeholder="password" v-model="password" />
       </div>
       <div>
-        <button 
-          class="button" 
-          @click="login"
-        >
+        <button class="button" @click="login">
           登录
         </button>
       </div>
@@ -29,42 +18,35 @@
 
 <script>
 import NProgress from 'nprogress';
-import { of } from 'rxjs';
-import { userLoginFlow } from '../../../data/flows/user';
+import * as userApis from '../../../data/apis/user';
 
 export default {
   name: 'PageLogin',
   data() {
     return {
       username: '',
-      password: '',
+      password: ''
     };
   },
   methods: {
     login() {
-      let ob = of({
-        username: this.username,
-        password: this.password,
-      });
-      ob = userLoginFlow(ob);
-
       NProgress.start();
-      this.$bindSub(
-        ob.subscribe(
-          (res) => {
-            NProgress.done();
-            this.$store.commit('setLoginUser', res);
-            this.$router.replace('/list');
-          },
-          (error) => {
-            NProgress.done();
-            // alert(error.message);
-          },
-        ),
-        'login',
-      );
-    },
-  },
+
+      userApis
+        .login({
+          username: this.username,
+          password: this.password
+        })
+        .then((res) => {
+          NProgress.done();
+          this.$store.commit('setLoginUser', res);
+          this.$router.replace('/list');
+        })
+        .catch((error) => {
+          NProgress.done();
+        });
+    }
+  }
 };
 </script>
 

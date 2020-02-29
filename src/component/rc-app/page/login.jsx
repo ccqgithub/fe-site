@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { observable, action } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { gentx } from 'gentx';
 import NProgress from 'nprogress';
-import { of } from 'rxjs';
-import { userLoginFlow } from '../../../data/flows/user';
+import * as userApis from '../../../data/apis/user';
 
 @inject('mainStore')
 @observer
-@gentx
 class Login extends Component {
   @observable
   form = {
@@ -22,28 +19,20 @@ class Login extends Component {
   }
 
   login() {
-    let ob = of({
-      username: this.form.username,
-      password: this.form.password,
-    });
-
-    ob = userLoginFlow(ob);
-
     NProgress.start();
-    this.$bindSub(
-      ob.subscribe(
-        (res) => {
-          NProgress.done();
-          this.props.mainStore.setLoginUser(res);
-          this.props.history.replace('/list');
-        },
-        () => {
-          NProgress.done();
-          // alert(error.message);
-        },
-      ),
-      'login',
-    );
+    userApis
+      .login({
+        username: this.form.username,
+        password: this.form.password,
+      })
+      .then((res) => {
+        NProgress.done();
+        this.props.mainStore.setLoginUser(res);
+        this.props.history.replace('/list');
+      })
+      .catch((error) => {
+        NProgress.done();
+      });
   }
 
   render() {

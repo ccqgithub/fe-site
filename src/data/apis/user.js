@@ -1,9 +1,3 @@
-import { makeObservable } from 'gentx';
-
-/**
- * user sources
- */
-
 // user login
 export function login({ username, password }) {
   let promise = new Promise((resolve, reject) => {
@@ -20,5 +14,5 @@ export function login({ username, password }) {
     }, 1000);
   });
 
-  return makeObservable(promise);
+  return promise;
 }

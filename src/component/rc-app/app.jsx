@@ -18,7 +18,7 @@ class App extends React.Component {
     // stores
     this.stores = {
       mainStore: new MainStore(),
-      todoStore: new TodoStore(),
+      todoStore: new TodoStore()
     };
   }
 
@@ -60,7 +60,7 @@ class App extends React.Component {
 
     const baseUrl = window.location.pathname.replace(
       /^(.*?\/react\/).*$/,
-      '$1',
+      '$1'
     );
 
     return (

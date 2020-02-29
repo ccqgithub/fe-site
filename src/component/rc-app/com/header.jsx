@@ -1,9 +1,7 @@
-import { gentx } from 'gentx';
 import { observer, inject } from 'mobx-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-@gentx
 @inject('mainStore')
 @observer
 class Header extends React.Component {

@@ -1,5 +1,5 @@
 <script>
-  var i18nConfig = JSON.parse('${REPLACE_I18N_CONFIG}');
+  var i18nConfig = JSON.parse('<%= htmlWebpackPlugin.options.defines.I18N_CONFIG %>');
   /**
    * set and check language
    */ 

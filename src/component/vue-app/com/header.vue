@@ -9,16 +9,11 @@
     </li>
 
     <li v-if="user">
-      <router-link to="user">
-        user: {{ user.username }}
-      </router-link>
+      <router-link to="user"> user: {{ user.username }} </router-link>
     </li>
 
     <li v-if="user">
-      <a 
-        href="javascript:;" 
-        @click="logout"
-      >Logout</a>
+      <a href="javascript:;" @click="logout">Logout</a>
     </li>
   </ul>
 </template>
@@ -34,14 +29,14 @@ export default {
   computed: {
     user() {
       return this.$store.state.loginUser;
-    },
+    }
   },
   mounted() {},
   methods: {
     logout() {
       this.$root.logout();
-    },
-  },
+    }
+  }
 };
 </script>
 

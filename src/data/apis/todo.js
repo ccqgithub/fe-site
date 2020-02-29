@@ -1,9 +1,3 @@
-import { makeObservable } from 'gentx';
-
-/**
- * todo sources
- */
-
 // todo list
 export function list({ page = 1, count = 20 }) {
   let todoList = [
@@ -11,11 +5,10 @@ export function list({ page = 1, count = 20 }) {
       id: 1,
       title: 'title',
       description: 'description',
-    },
+    }
   ];
 
-  // equal to: Observable.from([todoList])
-  return makeObservable([todoList]);
+  return Promise.resolve(todoList);
 }
 
 // add todo
@@ -30,8 +23,7 @@ export function add(todo) {
     }, 1000);
   });
 
-  // equal to: Observable.from(promise)
-  return makeObservable(promise);
+  return promise;
 }
 
 // del todo
@@ -42,6 +34,5 @@ export function del(todoId) {
     }, 1000);
   });
 
-  // equal to: Observable.from(promise)
-  return makeObservable(promise);
+  return promise;
 }

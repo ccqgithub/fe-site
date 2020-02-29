@@ -9,7 +9,7 @@ import App from '../component/rc-app/app';
 
 // configure react
 configure({
-  enforceActions: 'strict',
+  enforceActions: 'always'
 });
 
 const render = (Component) => {
@@ -17,7 +17,7 @@ const render = (Component) => {
     <AppContainer>
       <Component />
     </AppContainer>,
-    document.getElementById('app'),
+    document.getElementById('app')
   );
 };
 

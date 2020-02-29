@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { gentx } from 'gentx';
 import NProgress from 'nprogress';
-import { of } from 'rxjs';
-import { todoFlows } from '../../../data/flows/todo';
+import * as todoApis from '../../../data/apis/todo';
 
 @inject('mainStore', 'todoStore')
 @observer
-@gentx
 class List extends Component {
   componentDidMount() {
     // console.log('list===');
@@ -15,77 +12,52 @@ class List extends Component {
   }
 
   getList() {
-    // unsubscribe last request if exists
-    this.$unsubscribe('getList');
-
     // ui progress
     NProgress.start();
 
-    // create aobservable
-    let ob = of({});
-
-    // use todoFlows.list flow
-    ob = todoFlows.list(ob);
-
-    // subscribe
-    let sub = ob.subscribe(
-      (res) => {
+    todoApis
+      .list({})
+      .then((res) => {
         NProgress.done();
         // change store data
         this.props.todoStore.update(res);
-      },
-      () => {
+      })
+      .catch((error) => {
         NProgress.done();
-        // alert(error.message);
-      },
-    );
-
-    // bind sub to component, easy to unbind automatically
-    this.$bindSub(sub, 'getList', true);
+      });
   }
 
   add() {
-    let ob = of({
-      id: Date.now(),
-      title: 'ooooo',
-      description: 'xxxxx',
-    });
-    ob = todoFlows.add(ob);
-
     NProgress.start();
-    this.$bindSub(
-      ob.subscribe(
-        (res) => {
-          NProgress.done();
-          this.props.todoStore.add(res);
-        },
-        () => {
-          NProgress.done();
-          // alert(error.message);
-        },
-      ),
-      'add',
-    );
+
+    todoApis
+      .add({
+        id: Date.now(),
+        title: 'ooooo',
+        description: 'xxxxx'
+      })
+      .then((res) => {
+        NProgress.done();
+        this.props.todoStore.add(res);
+      })
+      .catch((error) => {
+        NProgress.done();
+      });
   }
 
   del(item) {
-    let ob = of({ id: item.id });
-    ob = todoFlows.del(ob);
-
     NProgress.start();
-    this.$bindSub(
-      ob.subscribe(
-        () => {
-          NProgress.done();
-          this.props.todoStore.del(item.id);
-        },
-        () => {
-          NProgress.done();
-          // alert(error.message);
-        },
-      ),
-      'del',
-    );
+    todoApis
+      .del({
+        id: item.id
+      })
+      .then((res) => {
+        NProgress.done();
+        this.props.todoStore.del(item.id);
+      })
+      .catch((error) => {
+        NProgress.done();
+      });
   }
 
   render() {

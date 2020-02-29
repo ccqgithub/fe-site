@@ -10,7 +10,7 @@ module.exports = {
   // 使用单引号
   singleQuote: true,
   // 多行是加结尾逗号
-  trailingComma: 'all',
+  trailingComma: 'none',
   // 大括号左右加空格
   bracketSpacing: true,
   // jsx标签结束符不换行
@@ -30,24 +30,24 @@ module.exports = {
     {
       files: '*.css',
       options: {
-        singleQuote: false,
-      },
+        singleQuote: false
+      }
     },
     {
       files: '*.less',
       options: {
-        singleQuote: false,
-      },
+        singleQuote: false
+      }
     },
     {
       files: '*.scss',
       options: {
-        singleQuote: false,
-      },
+        singleQuote: false
+      }
     },
     {
       files: '*.md',
-      options: {},
-    },
-  ],
+      options: {}
+    }
+  ]
 };
