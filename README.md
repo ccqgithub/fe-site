@@ -46,8 +46,6 @@
 - `npm install`
 - `npm run dev` 
 - 浏览器打开 [React App: http://127.0.0.1:3003/react/](http://127.0.0.1:3003/react/)
-- 浏览器打开 [React Router H5: http://127.0.0.1:3003/rc-router-h5.html](http://127.0.0.1:3003/rc-router-h5.html)
-- 浏览器打开 [React Router Admin: http://127.0.0.1:3003/rc-router-admin.html](http://127.0.0.1:3003/rc-router-admin.html)
 - 浏览器打开 [Vue App: http://127.0.0.1:3003/vue/](http://127.0.0.1:3003/vue/)
 
 ## 配置
