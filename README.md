@@ -68,10 +68,8 @@
   |---- asset: 静态资源
   |---- data: 数据
      |---- apis: api基础文件，用来调用api
-     |---- soureces: 数据源
      |---- vue-stores: vuex 的数据 store
      |---- rc-stores: mobx 数据store
-     |---- flows: 数据流
      |---- i18n: 国际化翻译数据
      |
   |---- entry: 入口js
