@@ -9,6 +9,10 @@ module.exports = {
   semi: true,
   // 使用单引号
   singleQuote: true,
+  // 对象熟悉是否需要引号
+  quoteProps: 'preserve',
+  // jsx 中熟悉使用单引号
+  jsxSingleQuote: false,
   // 多行是加结尾逗号
   trailingComma: 'none',
   // 大括号左右加空格
@@ -17,14 +21,18 @@ module.exports = {
   jsxBracketSameLine: false,
   // 箭头函数参数加括号
   arrowParens: 'always',
-  // "rangeStart": 0,
-  // "rangeEnd": null,
   // 文件顶部有需要格式化注释时才格式化
   requirePragma: false,
   // 格式化后添加格式化注释标志
   insertPragma: false,
   // markdown文本换行
   proseWrap: 'preserve',
+  // 处理html换行后空格问题
+  htmlWhitespaceSensitivity: 'css',
+  // vue style 和 script 内容是否缩进
+  vueIndentScriptAndStyle: false,
+  // 行尾模式
+  endOfLine: 'auto',
   // overrides
   overrides: [
     {

@@ -8,7 +8,7 @@
   <title>
     fe-site
   </title>
-
+  
   <% htmlWebpackPlugin.files.css.forEach(function(css) { %>
   <link rel="stylesheet" href="<%= css %>">
   <% }) %>
@@ -19,10 +19,10 @@
 
   <div id="app" class="app"> 
   </div>
-
+  
   <% htmlWebpackPlugin.files.js.forEach(function(js) { %>
   <script src="<%= js %>"></script>
   <% }) %>
- 
+  
 </body>
 </html>

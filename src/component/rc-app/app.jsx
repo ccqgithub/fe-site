@@ -1,3 +1,5 @@
+import 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 import React from 'react';
 // import DevTools from 'mobx-react-devtools';
 import { observer, Provider } from 'mobx-react';
@@ -81,4 +83,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default hot(App);

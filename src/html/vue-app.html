@@ -9,7 +9,9 @@
     fe-site
   </title>
 
-  <%= htmlWebpackPlugin.tags.headTags %>
+  <% htmlWebpackPlugin.files.css.forEach(function(css) { %>
+  <link rel="stylesheet" href="<%= css %>">
+  <% }) %>
 
   ${require('./partial/tongji.html')}
 </head>
@@ -18,7 +20,9 @@
   <div id="app" class="app"> 
   </div>
 
-  <%= htmlWebpackPlugin.tags.bodyTags %>
+  <% htmlWebpackPlugin.files.js.forEach(function(js) { %>
+  <script src="<%= js %>"></script>
+  <% }) %>
  
 </body>
 </html>

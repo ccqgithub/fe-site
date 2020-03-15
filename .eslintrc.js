@@ -74,6 +74,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     // 强制 export default
     'import/prefer-default-export': 'off',
+    'import/no-dynamic-require': 'off',
     // 不允许全局require
     'global-require': 'off',
     // 要求 return 语句要么总是指定返回的值，要么不指定
@@ -115,7 +116,7 @@ module.exports = {
   overrides: [
     // build相关运行在node环境
     {
-      files: ['build/**/*', 'config/**/*', 'script/**/*'],
+      files: ['config/**/*', 'script/**/*'],
       parserOptions: {
         // move it into parserOptions, for eslint-plugin-vue
         // https://github.com/vuejs/eslint-plugin-vue#couple-faq
