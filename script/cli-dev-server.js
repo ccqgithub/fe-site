@@ -9,8 +9,8 @@ program.version('0.0.1');
 
 program
   .name('build')
-  .option('-a, --app-env <appEnv>', 'app env', 'prod')
-  .option('-n, --node-env <nodeEnv>', 'node env', 'production')
+  .option('-a, --app-env <appEnv>', 'app env', 'dev')
+  .option('-n, --node-env <nodeEnv>', 'node env', 'development')
   .option('-r, --root <siteRoot>', 'root', process.cwd())
   .parse(process.argv);
 
@@ -21,6 +21,6 @@ process.env.NODE_ENV = nodeEnv;
 process.env.APP_ENV = appEnv;
 
 const siteRoot = path.resolve(process.cwd(), root);
-const envArgs = { appEnv, nodeEnv, root: siteRoot };
+const envArgs = { appEnv, nodeEnv, root: siteRoot, onlyServer: true };
 
-require('./lib/build')(envArgs);
+require('./lib/dev-server')(envArgs);

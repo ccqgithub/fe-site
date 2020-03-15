@@ -127,7 +127,7 @@ module.exports = (envArgs) => {
   if (envConf.plugin.vue) {
     plugins.push(new VueLoaderPlugin());
   }
-  // defiens
+  // defines
   plugins.push(new webpack.DefinePlugin(envConf.define));
   // copy publics
   plugins.push(new CopyWebpackPlugin(envConf.public.copyList));

@@ -14,7 +14,6 @@ const hotMiddleware = require('koa-webpack-hot');
 
 module.exports = (envArgs) => {
   const envConf = require('./env.conf')(envArgs);
-  const webpackConf = require('./webpack.conf')(envArgs);
 
   // 清理目录
   const clearDist = (callback) => {
@@ -34,47 +33,50 @@ module.exports = (envArgs) => {
   app.subdomainOffset = 2;
 
   /* == WEBPACK == */
-  const compiler = webpack(webpackConf);
-  clearDist(() => {
-    compiler.watch(
-      {
-        // config
-      },
-      (err, stats) => {
-        if (err) {
-          console.error(err.stack || err);
-          if (err.details) {
-            console.error(err.details);
+  if (!envArgs.onlyServer) {
+    const webpackConf = require('./webpack.conf')(envArgs);
+    const compiler = webpack(webpackConf);
+    clearDist(() => {
+      compiler.watch(
+        {
+          // config
+        },
+        (err, stats) => {
+          if (err) {
+            console.error(err.stack || err);
+            if (err.details) {
+              console.error(err.details);
+            }
+            return;
           }
-          return;
-        }
 
-        const info = stats.toJson();
+          const info = stats.toJson();
 
-        if (stats.hasErrors()) {
-          info.errors.forEach((error) => {
-            console.error(error);
-          });
-        }
+          if (stats.hasErrors()) {
+            info.errors.forEach((error) => {
+              console.error(error);
+            });
+          }
 
-        if (stats.hasWarnings()) {
-          info.warnings.forEach((warn) => {
-            console.warn(warn);
-          });
+          if (stats.hasWarnings()) {
+            info.warnings.forEach((warn) => {
+              console.warn(warn);
+            });
+          }
         }
-      }
+      );
+    });
+
+    // hot reload socket
+    app.use(rewrite(/^\/.+\/__webpack_hmr/, '/__webpack_hmr'));
+    app.use(
+      hotMiddleware(compiler, {
+        log: console.log,
+        path: '/__webpack_hmr'
+        // heartbeat: 10 * 1000
+      })
     );
-  });
-
-  // hot reload socket
-  app.use(rewrite(/^\/.+\/__webpack_hmr/, '/__webpack_hmr'));
-  app.use(
-    hotMiddleware(compiler, {
-      log: console.log,
-      path: '/__webpack_hmr'
-      // heartbeat: 10 * 1000
-    })
-  );
+  }
 
   /* == PROXY == */
   // cors

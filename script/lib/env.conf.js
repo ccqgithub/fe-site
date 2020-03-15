@@ -376,7 +376,7 @@ module.exports = (envArgs) => {
     'devServer'
   ].forEach((key) => {
     conf[key] = {
-      ...defConf,
+      ...defConf[key],
       ...(comConf[key] || {}),
       ...(envConf[key] || {})
     };
