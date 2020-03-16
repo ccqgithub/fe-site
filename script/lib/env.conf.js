@@ -33,7 +33,20 @@ const getDefConf = (envArgs) => {
       // 是否清理产出目录distPath
       clear: envArgs.nodeEnv !== 'production',
       // mode
-      mode: envArgs.nodeEnv === 'production' ? 'production' : 'development'
+      mode: envArgs.nodeEnv === 'production' ? 'production' : 'development',
+      // 是否保存stats.json，以供后续分析
+      statsJson: true,
+      // split chunks
+      splitChunks: {
+        chunks: 'all',
+        minSize: 30000,
+        maxSize: 900000,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 3,
+        automaticNameDelimiter: '-',
+        name: !isProduction
+      }
     },
 
     // entry

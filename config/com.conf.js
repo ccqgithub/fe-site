@@ -58,7 +58,41 @@ module.exports = (envArgs) => {
       // 是否清理产出目录distPath
       clear: envArgs.nodeEnv !== 'production',
       // mode
-      mode: envArgs.nodeEnv === 'production' ? 'production' : 'development'
+      mode: envArgs.nodeEnv === 'production' ? 'production' : 'development',
+      // 是否保存stats.json，以供后续分析
+      statsJson: true,
+      // split chunks
+      // splitChunks: null,
+      splitChunks: {
+        chunks: 'all',
+        minSize: 30000,
+        maxSize: 900000,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 4,
+        automaticNameDelimiter: '-',
+        name: !isProduction,
+        cacheGroups: {
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|prop-types)[\\/]/,
+            priority: 2,
+            name: 'vendor-rect',
+            reuseExistingChunk: true
+          },
+          vue: {
+            test: /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/,
+            priority: 2,
+            name: 'vendor-vue',
+            reuseExistingChunk: true
+          },
+          rxjs: {
+            test: /[\\/]node_modules[\\/](rxjs)[\\/]/,
+            priority: 2,
+            name: 'vendor-rxjs',
+            reuseExistingChunk: true
+          }
+        }
+      }
     },
 
     // entry

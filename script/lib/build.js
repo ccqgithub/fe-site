@@ -24,7 +24,28 @@ module.exports = (envArgs) => {
   checkClear(() => {
     webpack(webpackConf, (err, stats) => {
       spinner.stop();
-      if (err) throw err;
+
+      if (err) {
+        console.error(err.stack || err);
+        if (err.details) {
+          console.error(err.details);
+        }
+        return;
+      }
+
+      const info = stats.toJson();
+
+      if (stats.hasErrors()) {
+        info.errors.forEach((error) => {
+          console.error(error);
+        });
+      }
+
+      if (stats.hasWarnings()) {
+        info.warnings.forEach((warn) => {
+          console.warn(warn);
+        });
+      }
 
       process.stdout.write(
         `${stats.toString({
