@@ -24,7 +24,8 @@ module.exports = {
     // https://github.com/babel/eslint-plugin-babel
     'babel',
     // https://github.com/prettier/eslint-plugin-prettier
-    'prettier'
+    'prettier',
+    'react-hooks'
   ],
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#bulb-rules
@@ -98,6 +99,8 @@ module.exports = {
     // 转义html实体字符
     'react/no-unescaped-entities': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     // html属性必须带引号
     'vue/html-quotes': 'error',
     // 不能在模板里用this
