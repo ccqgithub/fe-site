@@ -145,23 +145,7 @@ module.exports = (envArgs) => {
     loader: {
       rules: [
         {
-          test: /partial\/.*\.html$/,
-          use: [
-            {
-              loader: 'html-loader',
-              options: {
-                attrs: ['img:src'],
-                minimize: false,
-                removeComments: false,
-                collapseWhitespace: false,
-                removeAttributeQuotes: false,
-                interpolate: 'require'
-              }
-            }
-          ]
-        },
-        {
-          test: /html\/[^/]*\.html$/,
+          test: /html\/.*\.html$/,
           use: [
             {
               loader: 'ejs-loader'
@@ -172,12 +156,20 @@ module.exports = (envArgs) => {
             {
               loader: 'html-loader',
               options: {
-                attrs: ['img:src'],
-                minimize: true,
-                removeComments: false,
-                collapseWhitespace: false,
-                removeAttributeQuotes: false,
-                interpolate: 'require'
+                attributes: {
+                  list: [
+                    {
+                      tag: 'img',
+                      attribute: 'src',
+                      type: 'src'
+                    }
+                  ]
+                },
+                minimize: {
+                  removeComments: false,
+                  collapseWhitespace: false,
+                  removeAttributeQuotes: false
+                }
               }
             }
           ]
@@ -410,27 +402,30 @@ module.exports = (envArgs) => {
     i18n: i18nConfig,
 
     // dev server
+    // https://webpack.js.org/configuration/dev-server/
     devServer: {
-      // 端口
       port: 3003,
-      // 跨域
-      // https://github.com/koajs/cors
-      proxyCors: {
-        allowHeaders: ['TOKEN', 'Locale', 'content-type'],
-        exposeHeaders: ['TOKEN']
+      hotOnly: true,
+      contentBase: path.join(envArgs.root, './dist'),
+      writeToDisk: true,
+      liveReload: false,
+      headers: {
+        'Access-Control-Expose-Headers': 'Token',
+        'Access-Control-Allow-Headers': 'Token,Locale,Content-Type',
+        'Access-Control-Allow-Origin': '*'
       },
-      // https://github.com/popomore/koa-proxy
-      proxies: [
+      proxy: [
         {
-          host: 'http://www.xxx.cn',
-          match: /^\/xxx\//
+          '/xxx-api': 'http://localhost:3000'
+        },
+        {
+          context: ['/vue', '/react'],
+          target: 'http://localhost:3003',
+          pathRewrite: {
+            '^/vue(/.*|$)': '/vue-app.html',
+            '^/react(/.*|$)': '/rc-app.html'
+          }
         }
-      ],
-      // url 重写
-      // https://github.com/koajs/rewrite
-      rewrites: [
-        [/^\/vue(\/.*|$)/, '/vue-app.html'],
-        [/^\/react(\/.*|$)/, '/rc-app.html']
       ]
     }
   };

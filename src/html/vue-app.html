@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   
-  ${require('./partial/meta.html')}
-  ${require('./partial/language.html')}
+  <%= require('./partial/meta.html')({ htmlWebpackPlugin: htmlWebpackPlugin }) %>
+  <%= require('./partial/language.html')({ htmlWebpackPlugin: htmlWebpackPlugin }) %>
 
   <title>
     fe-site
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="<%= css %>">
   <% }) %>
 
-  ${require('./partial/tongji.html')}
+  <%= require('./partial/tongji.html')() %>
 </head>
 <body>
 

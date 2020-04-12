@@ -13,16 +13,9 @@ module.exports = (envArgs) => {
   const isProduction = envArgs.nodeEnv === 'production';
 
   // entry js
-  const hotReloadEntry = [
-    `webpack-hot-middleware/client?reload=false&path=${envConf.output.publicPath}__webpack_hmr`
-  ];
   const entryObj = {};
   Object.keys(envConf.entry.js).forEach((key) => {
-    if (isProduction) {
-      entryObj[key] = envConf.entry.js[key];
-    } else {
-      entryObj[key] = [].concat(envConf.entry.js[key]).concat(hotReloadEntry);
-    }
+    entryObj[key] = envConf.entry.js[key];
   });
 
   const webpackConfig = {
@@ -89,10 +82,6 @@ module.exports = (envArgs) => {
   // production
   if (isProduction) {
     plugins.push(new OptimizeCSSAssetsPlugin({}));
-  }
-  // not porduction
-  if (!isProduction) {
-    plugins.push(new webpack.HotModuleReplacementPlugin({}));
   }
 
   webpackConfig.plugins = plugins;

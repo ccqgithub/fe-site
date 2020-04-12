@@ -2,6 +2,32 @@ const fs = require('fs');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+// 国际化配置
+const i18nConfig = {
+  // 开启国际化
+  on: true,
+  // 语言列表
+  languages: ['zh-CN', 'en-US'],
+  // 映射语言
+  map: {
+    zh: 'zh-CN',
+    en: 'en-US'
+  },
+  // 检查语言的顺序
+  detects: [
+    // /zh-CN/xxx
+    'path',
+    // /xxx?lang=zh-CN
+    'query',
+    // localStorage.getItem('lang')
+    'store',
+    // navigator.language: zh-CN
+    'browser'
+  ],
+  // 默认语言
+  default: 'zh-CN'
+};
+
 const getDefConf = (envArgs) => {
   const isProduction = envArgs.nodeEnv === 'production';
 
@@ -37,15 +63,36 @@ const getDefConf = (envArgs) => {
       // 是否保存stats.json，以供后续分析
       statsJson: true,
       // split chunks
+      // splitChunks: null,
       splitChunks: {
         chunks: 'all',
         minSize: 30000,
         maxSize: 900000,
         minChunks: 1,
         maxAsyncRequests: 5,
-        maxInitialRequests: 3,
+        maxInitialRequests: 4,
         automaticNameDelimiter: '-',
-        name: !isProduction
+        name: !isProduction,
+        cacheGroups: {
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|prop-types)[\\/]/,
+            priority: 2,
+            name: 'vendor-rect',
+            reuseExistingChunk: true
+          },
+          vue: {
+            test: /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/,
+            priority: 2,
+            name: 'vendor-vue',
+            reuseExistingChunk: true
+          },
+          rxjs: {
+            test: /[\\/]node_modules[\\/](rxjs)[\\/]/,
+            priority: 2,
+            name: 'vendor-rxjs',
+            reuseExistingChunk: true
+          }
+        }
       }
     },
 
@@ -53,7 +100,9 @@ const getDefConf = (envArgs) => {
     entry: {
       // js entry
       js: {
-        'entry/index': './entry/index.js'
+        'entry/index': './entry/index.js',
+        'entry/vue-app': './entry/vue-app.js',
+        'entry/rc-app': './entry/rc-app.jsx'
       },
       // html
       html: [
@@ -63,8 +112,31 @@ const getDefConf = (envArgs) => {
           chunks: ['entry/index'],
           inject: false,
           minify: false,
-          others: {
-            publicPath: '/'
+          data: {
+            publicPath: '/',
+            i18nConfig
+          }
+        },
+        {
+          template: 'html/vue-app.html',
+          filename: 'vue-app.html',
+          chunks: ['entry/vue-app'],
+          inject: false,
+          minify: false,
+          data: {
+            publicPath: '/',
+            i18nConfig
+          }
+        },
+        {
+          template: 'html/rc-app.html',
+          filename: 'rc-app.html',
+          chunks: ['entry/rc-app'],
+          inject: false,
+          minify: false,
+          data: {
+            publicPath: '/',
+            i18nConfig
           }
         }
       ]
@@ -74,23 +146,7 @@ const getDefConf = (envArgs) => {
     loader: {
       rules: [
         {
-          test: /partial\/.*\.html$/,
-          use: [
-            {
-              loader: 'html-loader',
-              options: {
-                attrs: ['img:src'],
-                minimize: false,
-                removeComments: false,
-                collapseWhitespace: false,
-                removeAttributeQuotes: false,
-                interpolate: 'require'
-              }
-            }
-          ]
-        },
-        {
-          test: /html\/[^/]*\.html$/,
+          test: /html\/.*\.html$/,
           use: [
             {
               loader: 'ejs-loader'
@@ -101,12 +157,20 @@ const getDefConf = (envArgs) => {
             {
               loader: 'html-loader',
               options: {
-                attrs: ['img:src'],
-                minimize: true,
-                removeComments: false,
-                collapseWhitespace: false,
-                removeAttributeQuotes: false,
-                interpolate: 'require'
+                attributes: {
+                  list: [
+                    {
+                      tag: 'img',
+                      attribute: 'src',
+                      type: 'src'
+                    }
+                  ]
+                },
+                minimize: {
+                  removeComments: false,
+                  collapseWhitespace: false,
+                  removeAttributeQuotes: false
+                }
               }
             }
           ]
@@ -117,7 +181,7 @@ const getDefConf = (envArgs) => {
         },
         {
           test: /\.less$/,
-          use: (isProduction
+          use: (envArgs.nodeEnv === 'production'
             ? [MiniCssExtractPlugin.loader]
             : [
                 {
@@ -154,7 +218,7 @@ const getDefConf = (envArgs) => {
         },
         {
           test: /\.scss$/,
-          use: (isProduction
+          use: (envArgs.nodeEnv === 'production'
             ? [MiniCssExtractPlugin.loader]
             : [
                 {
@@ -187,7 +251,7 @@ const getDefConf = (envArgs) => {
         },
         {
           test: /\.styl$/,
-          use: (isProduction
+          use: (envArgs.nodeEnv === 'production'
             ? [MiniCssExtractPlugin.loader]
             : [
                 {
@@ -220,7 +284,7 @@ const getDefConf = (envArgs) => {
         },
         {
           test: /\.pcss$/,
-          use: (isProduction
+          use: (envArgs.nodeEnv === 'production'
             ? [MiniCssExtractPlugin.loader]
             : [
                 {
@@ -247,7 +311,7 @@ const getDefConf = (envArgs) => {
         },
         {
           test: /\.css$/,
-          use: (isProduction
+          use: (envArgs.nodeEnv === 'production'
             ? [MiniCssExtractPlugin.loader]
             : [
                 {
@@ -336,35 +400,28 @@ const getDefConf = (envArgs) => {
       ]
     },
 
+    i18n: i18nConfig,
+
     // dev server
+    // https://webpack.js.org/configuration/dev-server/
     devServer: {
-      // 端口
       port: 3003,
-      // 跨域
-      // https://github.com/koajs/cors
-      proxyCors: {
-        allowHeaders: ['TOKEN', 'Locale', 'content-type'],
-        exposeHeaders: ['TOKEN']
+      contentBase: path.join(envArgs.root, './dist'),
+      writeToDisk: true,
+      headers: {
+        'Access-Control-Expose-Headers': 'Token',
+        'Access-Control-Allow-Headers': 'Token,Locale,Content-Type',
+        'Access-Control-Allow-Origin': '*'
       },
-      // https://github.com/popomore/koa-proxy
-      proxies: [
-        {
-          host: 'http://www.xxx.cn',
-          match: /^\/xxx\//
-        }
-      ],
-      // url 重写
-      // https://github.com/koajs/rewrite
-      rewrites: [
-        [/^\/vue(\/.*|$)/, '/vue-app.html'],
-        [/^\/react(\/.*|$)/, '/rc-app.html']
-      ]
+      proxy: {
+        '/xxx-api': 'http://localhost:3000'
+      }
     }
   };
 };
 
 module.exports = (envArgs) => {
-  let { appEnv, nodeEnv, root } = envArgs;
+  let { appEnv, root } = envArgs;
   let comConfJs = path.resolve(root, `./config/com.conf.js`);
   let envConfJs = path.resolve(root, `./config/env/${appEnv}.conf.js`);
   let defConf = getDefConf(envArgs);
