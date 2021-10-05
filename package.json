@@ -103,7 +103,7 @@
     "react-transition-group": "4.3.0",
     "rxjs": "6.5.5",
     "superagent": "5.2.2",
-    "url-parse": "1.4.7",
+    "url-parse": "1.5.2",
     "vue-property-decorator": "8.4.1",
     "vue-router": "3.1.6",
     "vuex": "3.1.3"
