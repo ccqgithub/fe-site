@@ -94,7 +94,7 @@
     "mobx": "5.15.4",
     "mobx-react": "6.2.2",
     "nprogress": "0.2.0",
-    "qs": "6.9.3",
+    "qs": "6.9.7",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-modal": "3.11.2",
